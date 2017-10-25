@@ -3,5 +3,7 @@ body{
 	background-size: cover;
 }
 main{
+  float:left;
+  margin-left: 500px;
   
 }
