@@ -1,10 +1,36 @@
 
 var score=0;
 var formule;
+var TFormule[];
+function bloc(){
+	this.debut=0;
+	this.fin=0;	
+}
 function game(id){
-	formule = document.getElementById(id).innerHTML;
+	formule = id.innerHTML;
+	var TFormule = new Array(formule.length);
+	var ParcourTableau = 0;
+	var symbole;
 	for (var i; i<formule.length; i++){
-		TraitementSymbole(formule.charAT(i));
+		symbole=formule.charAT(i));
+		
+		if (symbole=="("){
+			var b = new bloc();
+			b.debut= i+1;
+			var cpt =1;
+			while (cpt>0){
+				i++
+				if(formule.charAt(i)==")"){cpt--;}
+				if(formule.charAt(i)=="("){cpt++;}
+				
+			}
+			b.fin=i-1;
+			TFormule[ParcourTableau]=b;
+			
+		}
+		
+		
+		
 	}
 	
 }
