@@ -6,6 +6,32 @@ function bloc(){
 	this.debut=0;
 	this.fin=0;	
 }
+function randomGame(){
+  var tab = new Array();
+  tab[0]="p-((p-q)-q)";
+  tab[1]="p-(!q-!(p-q))";
+  tab[2]="(!p-!q)-(q-p)";
+  tab[3]="(p&(p-q)&((p-q)-r))-p&q&r)";
+  tab[4]="(p-q)-((q-r)-(p-r))";
+  tab[5]="(((s&p)-(q&r))&(!r|!q)&p)-!s";
+  tab[6]="((p-q)&((r&s)-p)&(t-r)&(s&t))-q";
+  tab[7]="(p-(q-r))-((p-q)-(p-r))";
+  tab[8]="(q-p)-((!q-p)-p)";
+  tab[9]="p-(q-r)-((p-r)|(q-r))";
+  tab[10]="((p-r)|(q-r))-(p-(q-r))";
+  tab[11]="((p-q)&(q-p))|(p&!p)|(!p&q)";
+  tab[12]="(!(a&b)-(!a|!b))";
+  tab[13]="((!a|!b)-!(a&b))";
+  tab[14]="((a|b|!c)&(&|b|c)&(a|!b))-a";
+  tab[15]="(u&(w-v)&(t-v)&(u-(w|t)))-v";
+  tab[16]="r|((p&(p-q)&((p-q)&r))-(p&q&r))&(t-!r)";
+  tab[17]="(p|(q-!p))|((p&(p-q)&((p-q)-r))-(p&q&r))";
+  tab[18]="((p-(q-r))-((q-r)|(q-r)))-((!(!q-!p))|!q|q)";
+  tab[19]="((((s&p)-(q&r))&(!r|!q)&p)&(t&(s-!t)))-!s";
+  var x = Math.floor((Math.random() * 20) );
+  document.getElementById("f1").innerHTML = tab[x];
+
+}
 function game(id){
 	formule = id.innerHTML;
 	var TFormule = new Array(formule.length);
@@ -15,58 +41,21 @@ function game(id){
 		symbole=formule.charAT(i));
 		
 		if (symbole=="("){
-			if (i>0&&formule.charAt(-1)=='!'){
-				
-			}
 			var b = new bloc();
 			b.debut= i+1;
 			var cpt =1;
 			while (cpt>0){
-				i++;
+				i++
 				if(formule.charAt(i)==")"){cpt--;}
-				if(formule.charAt(i)=="("){cpt++;}				
+				if(formule.charAt(i)=="("){cpt++;}
+				
 			}
 			b.fin=i-1;
-			for (var j=b.debut; j<i;j++){
-				affichage= affichage+formule.charAt(j);
-			}
-			
+			TFormule[ParcourTableau]=b;
 			
 		}
 		
-		if (symbole== "-"){
-			nbEtape++;
-			affichage = "!("+affichage+')</button>			<button id="f'+nbEtape+'" type="button">';
-			i++
-			while(i<formule.length){
-				affichage=affichage+formule.charAt(i);
-				i++;
-			}
-			affichage=affichage+'</button><br><br><div id="d'+nbEtape-1+'><\div> 		<div id="d'+nbEtape+'><\div>';
-			
-		}
-
-		if(symbole== "&"){
-			affichage=affichage+'</button><br><button id="f'+nbEtape+'" type="button">';
-			while(i<formule.length){
-				affichage=affichage+formule.charAt(i);
-				i++;
-			}
-			affichage=affichage+'</button><br><br><div id="d'+nbEtape+'><\div>';
-		}
 		
-		if(symbole== "|"){
-			affichage=affichage+'</button>		<button id="f'+nbEtape+'" type="button">';
-			while(i<formule.length){
-				affichage=affichage+formule.charAt(i);
-				i++;
-			}
-			affichage=affichage+'</button><br><br><div id="d'+nbEtape-1+'><\div> 		<div id="d'+nbEtape+'><\div>';
-		}
-		
-		else{
-			affichage=affichage+formule.charAt(i);
-		}
 		
 	}
 	
