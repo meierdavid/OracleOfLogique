@@ -1,7 +1,7 @@
 
 var score=0;
 var formule;
-var TFormule[];
+var nbEtape=0;
 function bloc(){
 	this.debut=0;
 	this.fin=0;	
@@ -32,28 +32,73 @@ function randomGame(){
   document.getElementById("f1").innerHTML = tab[x];
 
 }
-function game(id){
+function game(id, nbDiv){
+	nbEtape++;
 	formule = id.innerHTML;
-	var TFormule = new Array(formule.length);
 	var ParcourTableau = 0;
 	var symbole;
+	var affichage='<button id="f'+nbEtape+'" type="button">';
 	for (var i; i<formule.length; i++){
-		symbole=formule.charAT(i));
+		symbole=formule.charAT(i);
 		
 		if (symbole=="("){
+			if (i>0&&formule.charAt(-1)=='!'){
+				
+			}
 			var b = new bloc();
 			b.debut= i+1;
 			var cpt =1;
 			while (cpt>0){
-				i++
+				i++;
 				if(formule.charAt(i)==")"){cpt--;}
-				if(formule.charAt(i)=="("){cpt++;}
-				
+				if(formule.charAt(i)=="("){cpt++;}				
 			}
 			b.fin=i-1;
-			TFormule[ParcourTableau]=b;
+			for (var j=b.debut; j<i;j++){
+				affichage= affichage+formule.charAt(j);
+			}
+			
 			
 		}
+		
+		if (symbole== "-"){
+			nbEtape++;
+			affichage = "!("+affichage+')</button>			<button id="f'+nbEtape+'" type="button">';
+			i++
+			while(i<formule.length){
+				affichage=affichage+formule.charAt(i);
+				i++;
+			}
+			affichage=affichage+'</button><br><br><div id="d'+nbEtape-1+'><\div> 		<div id="d'+nbEtape+'><\div>';
+			
+		}
+
+		if(symbole== "&"){
+			affichage=affichage+'</button><br><button id="f'+nbEtape+'" type="button">';
+			while(i<formule.length){
+				affichage=affichage+formule.charAt(i);
+				i++;
+			}
+			affichage=affichage+'</button><br><br><div id="d'+nbEtape+'><\div>';
+		}
+		
+		if(symbole== "|"){
+			affichage=affichage+'</button>		<button id="f'+nbEtape+'" type="button">';
+			while(i<formule.length){
+				affichage=affichage+formule.charAt(i);
+				i++;
+			}
+			affichage=affichage+'</button><br><br><div id="d'+nbEtape-1+'><\div> 		<div id="d'+nbEtape+'><\div>';
+		}
+		
+		else{
+			affichage=affichage+formule.charAt(i);
+		}
+		
+	}
+		
+		
+		
 		
 		
 		
