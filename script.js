@@ -35,17 +35,17 @@ function randomGame(){
 
 function verif(id){
 /* id bouton vérif == nombre de bouton(nb sous formules) + num
-ex: 1. avb / !b  id button vérif = 21
+ex: 1. avb / !b  id button vérif = v21
 
-2. a / !b  id button vérif = 22
+2. a / !b  id button vérif = v22
 
-3. b / !b id button vérif = 23
+3. b / !b id button vérif = v23
 
 */
 var tab= new Array();
 var verif=false;
-for( var i=0; i<id.charAT(0); i++ ){
-	idformule="f"+id.charAT(1)+i;
+for( var i=0; i<id.charAT(1); i++ ){
+	idformule="f"+id.charAT(2)+i;
 	tab[i]= idformule.innerHTML;
 }
 for(var j=0; j<tab.length;j++){
