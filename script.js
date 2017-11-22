@@ -32,6 +32,35 @@ function randomGame(){
   document.getElementById("f1").innerHTML = tab[x];
 
 }
+
+function verif(id){
+/* id bouton vérif == nombre de bouton(nb sous formules) + num
+ex: 1. avb / !b  id button vérif = 21
+
+2. a / !b  id button vérif = 22
+
+3. b / !b id button vérif = 23
+
+*/
+var tab= new Array();
+var verif=false;
+for( var i=0; i<id.charAT(0); i++ ){
+	idformule="f"+id.charAT(1)+i;
+	tab[i]= idformule.innerHTML;
+}
+for(var j=0; j<tab.length;j++){
+	for(var k=0; k<tab.length;k++){
+var compare1="!"+tab[j];
+var compare2= "!"+tab[k];
+if(compare1==tab[k] || compare2==tab[j]){
+	verif=true;
+}
+	}
+
+}
+return verif;
+
+}
 function game(id, nbDiv){
 	nbEtape++;
 	formule = id.innerHTML;
@@ -41,7 +70,7 @@ function game(id, nbDiv){
 	for (var i; i<formule.length; i++){
 		symbole=formule.charAT(i);
 		
-		if (symbole=="("){
+		if (symbole=="("){ //trouve les différentes parties de l'expression
 			if (i>0&&formule.charAt(-1)=='!'){
 				
 			}
@@ -61,7 +90,7 @@ function game(id, nbDiv){
 			
 		}
 		
-		if (symbole== "-"){
+		if (symbole== "-"){ //implication
 			nbEtape++;
 			affichage = "!("+affichage+')</button>			<button id="f'+nbEtape+'" type="button">';
 			i++
