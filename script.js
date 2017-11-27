@@ -64,7 +64,7 @@ function randomGame(){
 
 }
 
-function game(id, nbDiv){
+function game(id, idDiv){
 
 	nbEtape++;
 
@@ -74,7 +74,7 @@ function game(id, nbDiv){
 
 	var symbole;
 
-	var affichage='<button onclick="game(this,'nbEtape')" id="f'+nbEtape+"1"+'" type="button">';
+	var affichage='<button onclick="game(this,'+"d"+nbEtape+"1"+')" id="f'+nbEtape+"1"+'" type="button">';
 
 	for (var i; i<formule.length; i++){
 
@@ -126,7 +126,7 @@ function game(id, nbDiv){
 
 			nbEtape++;
 
-			affichage = "!("+affichage+')</button>			<button onclick="game(this,'nbEtape')" id="f'+nbEtape+"2"+'" type="button">';
+			affichage = "!("+affichage+')</button>			<button onclick="game(this,'+"d"+nbEtape+"2"+')" id="f'+nbEtape+"2"+'" type="button">';
 
 			i++
 
@@ -138,7 +138,7 @@ function game(id, nbDiv){
 
 			}
 
-			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"'><\div> 		<div id="d'+nbEtape+"2"+'><\div>';
+			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'"><\div> 		<div id="d'+nbEtape+"2"+'"><\div>';
 
 			
 
@@ -148,7 +148,7 @@ function game(id, nbDiv){
 
 		if(symbole== "&"){
 
-			affichage=affichage+'</button><br><button onclick="game(this,'nbEtape')" id="f'+nbEtape+"2"+'" type="button">';
+			affichage=affichage+'</button><br><button onclick="game(this,'+"d"+nbEtape+"1"+')" id="f'+nbEtape+"2"+'" type="button">';
 
 			while(i<formule.length){
 
@@ -158,7 +158,7 @@ function game(id, nbDiv){
 
 			}
 
-			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"'><\div>';
+			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'"><\div>';
 
 		}
 
@@ -166,7 +166,7 @@ function game(id, nbDiv){
 
 		if(symbole== "|"){
 
-			affichage=affichage+'</button>		<button onclick="game(this,'nbEtape')" id="f'+nbEtape+"2"+'" type="button">';
+			affichage=affichage+'</button>		<button onclick="game(this,'+"d"+nbEtape+"2"+')" id="f'+nbEtape+"2"+'" type="button">';
 			i++;
 
 			while(i<formule.length){
@@ -177,7 +177,7 @@ function game(id, nbDiv){
 
 			}
 
-			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'><\div> 		<div id="d'+nbEtape+"2"+'><\div>';
+			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'"><\div> 		<div id="d'+nbEtape+"2"+'"><\div>';
 
 		}
 
@@ -238,7 +238,7 @@ function game(id, nbDiv){
 						}
 						else{affichage=affichage+"!"+charAt(i);}
 					}
-					affichage=affichage+'</button><br><br><div id="d'+nbEtape+"2"+'><\div>';
+					affichage=affichage+'</button><br><br><div id="d'+nbEtape+"2"+'"><\div>';
 				}
 				
 			}
@@ -263,6 +263,9 @@ function game(id, nbDiv){
 	}
 	
 	
+	document.getElementById(idDiv).innerHTML = affichage;
+	
+}
 
 	function verif(id){
 
@@ -298,21 +301,21 @@ function game(id, nbDiv){
 
 		for(var k=0; k<tab.length;k++){
 
-	var compare1="!"+tab[j];
+			var compare1="!"+tab[j];
 
-	var compare2= "!"+tab[k];
+			var compare2= "!"+tab[k];
 
-	if(compare1==tab[k] || compare2==tab[j]){
+			if(compare1==tab[k] || compare2==tab[j]){
 
-		verif=true;
+				verif=true;
+
+			}
+
+		}
+
+
 
 	}
-
-}
-
-
-
-}
 
 return verif;
 
@@ -332,11 +335,11 @@ return verif;
 
 		
 
-}
+
 
 	
 
-}
+
 
 /* le code de mon jeux, je le garde en guise de pense bete pour quelques syntaxe (et petit memo au debut)
 
