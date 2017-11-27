@@ -1,138 +1,341 @@
-
 var score=0;
+
 var formule;
+
 var nbEtape=0;
+
 function bloc(){
+
 	this.debut=0;
+
 	this.fin=0;	
+
 }
+
 function randomGame(){
+
   var tab = new Array();
-  tab[0]="!(p-((p-q)-q))";
+
+  tab[0]="!(p-((p-q)-q)))";
+
   tab[1]="!(p-(!q-!(p-q)))";
+
   tab[2]="!((!p-!q)-(q-p))";
+
   tab[3]="!((p&(p-q)&((p-q)-r))-p&q&r))";
+
   tab[4]="!((p-q)-((q-r)-(p-r)))";
+
   tab[5]="!((((s&p)-(q&r))&(!r|!q)&p)-!s)";
+
   tab[6]="!(((p-q)&((r&s)-p)&(t-r)&(s&t))-q)";
+
   tab[7]="!((p-(q-r))-((p-q)-(p-r)))";
+
   tab[8]="!((q-p)-((!q-p)-p))";
+
   tab[9]="!(p-(q-r)-((p-r)|(q-r)))";
+
   tab[10]="!(((p-r)|(q-r))-(p-(q-r)))";
+
   tab[11]="!(((p-q)&(q-p))|(p&!p)|(!p&q))";
-  tab[12]="!((!(a&b)-(!a|!b)))";
-  tab[13]="!(((!a|!b)-!(a&b)))";
+
+  tab[12]="!((!(a&b)-(!a|!b))";
+
+  tab[13]="!(((!a|!b)-!(a&b))";
+
   tab[14]="!(((a|b|!c)&(&|b|c)&(a|!b))-a)";
+
   tab[15]="!((u&(w-v)&(t-v)&(u-(w|t)))-v)";
+
   tab[16]="!(r|((p&(p-q)&((p-q)&r))-(p&q&r))&(t-!r))";
+
   tab[17]="!((p|(q-!p))|((p&(p-q)&((p-q)-r))-(p&q&r)))";
+
   tab[18]="!(((p-(q-r))-((q-r)|(q-r)))-((!(!q-!p))|!q|q))";
+
   tab[19]="!(((((s&p)-(q&r))&(!r|!q)&p)&(t&(s-!t)))-!s)";
+
   var x = Math.floor((Math.random() * 20) );
+
   document.getElementById("f1").innerHTML = tab[x];
 
-}
 
-function verif(id){
-/* id bouton vérif == nombre de bouton(nb sous formules) + num
-ex: 1. avb / !b  id button vérif = v21
-
-2. a / !b  id button vérif = v22
-
-3. b / !b id button vérif = v23
-
-*/
-var tab= new Array();
-var verif=false;
-for( var i=0; i<id.charAT(1); i++ ){
-	idformule="f"+id.charAT(2)+i;
-	tab[i]= idformule.innerHTML;
-}
-for(var j=0; j<tab.length;j++){
-	for(var k=0; k<tab.length;k++){
-var compare1="!"+tab[j];
-var compare2= "!"+tab[k];
-if(compare1==tab[k] || compare2==tab[j]){
-	verif=true;
-}
-	}
 
 }
-return verif;
 
-}
 function game(id, nbDiv){
+
 	nbEtape++;
+
 	formule = id.innerHTML;
+
 	var ParcourTableau = 0;
+
 	var symbole;
-	var affichage='<button id="f'+nbEtape+'" type="button">';
+
+	var affichage='<button onclick="game(this,'nbEtape')" id="f'+nbEtape+"1"+'" type="button">';
+
 	for (var i; i<formule.length; i++){
+
 		symbole=formule.charAT(i);
+
 		
-		if (symbole=="("){ //trouve les différentes parties de l'expression
-			if (i>0&&formule.charAt(-1)=='!'){
+
+		if (symbole=="("){
+
+			if (i>0){
+
 				
+
 			}
+
 			var b = new bloc();
+
 			b.debut= i+1;
+
 			var cpt =1;
+
 			while (cpt>0){
+
 				i++;
+
 				if(formule.charAt(i)==")"){cpt--;}
+
 				if(formule.charAt(i)=="("){cpt++;}				
+
 			}
+
 			b.fin=i-1;
+
 			for (var j=b.debut; j<i;j++){
+
 				affichage= affichage+formule.charAt(j);
+
 			}
+
 			
+
 			
+
 		}
+
 		
-		if (symbole== "-"){ //implication
+
+		if (symbole== "-"){
+
 			nbEtape++;
-			affichage = "!("+affichage+')</button>			<button id="f'+nbEtape+'" type="button">';
+
+			affichage = "!("+affichage+')</button>			<button onclick="game(this,'nbEtape')" id="f'+nbEtape+"2"+'" type="button">';
+
 			i++
+
 			while(i<formule.length){
+
 				affichage=affichage+formule.charAt(i);
+
 				i++;
+
 			}
-			affichage=affichage+'</button><br><br><div id="d'+nbEtape-1+'><\div> 		<div id="d'+nbEtape+'><\div>';
+
+			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"'><\div> 		<div id="d'+nbEtape+"2"+'><\div>';
+
 			
+
 		}
+
+
 
 		if(symbole== "&"){
-			affichage=affichage+'</button><br><button id="f'+nbEtape+'" type="button">';
+
+			affichage=affichage+'</button><br><button onclick="game(this,'nbEtape')" id="f'+nbEtape+"2"+'" type="button">';
+
 			while(i<formule.length){
+
 				affichage=affichage+formule.charAt(i);
+
 				i++;
+
 			}
-			affichage=affichage+'</button><br><br><div id="d'+nbEtape+'><\div>';
+
+			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"'><\div>';
+
 		}
+
 		
+
 		if(symbole== "|"){
-			affichage=affichage+'</button>		<button id="f'+nbEtape+'" type="button">';
+
+			affichage=affichage+'</button>		<button onclick="game(this,'nbEtape')" id="f'+nbEtape+"2"+'" type="button">';
+			i++;
+
 			while(i<formule.length){
+
 				affichage=affichage+formule.charAt(i);
+
 				i++;
+
 			}
-			affichage=affichage+'</button><br><br><div id="d'+nbEtape-1+'><\div> 		<div id="d'+nbEtape+'><\div>';
+
+			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'><\div> 		<div id="d'+nbEtape+"2"+'><\div>';
+
 		}
-		
+
+		if (symbole == "!"){
+			if (formule.charAt(i+1)=="("){
+				j=i+1;
+				var cpt =1;
+
+				while (cpt>0){
+
+					j++;
+
+					if(formule.charAt(j)==")"){cpt--;}
+
+					if(formule.charAt(j)=="("){cpt++;}				
+
+				}
+				if(j<formule.length-1){
+					while(i<formule.length){
+
+					affichage=affichage+formule.charAt(i);
+
+					i++;
+
+					}
+					
+				}
+				else{
+					
+					while(i<formule.length){
+						i++
+						if (formule.charAt(i)=="("){
+							j=i+1;
+							cpt=1;
+							while(cpt>0){
+								j++;
+								if(formule.charAt(j)==")"){cpt--;}
+								if(formule.charAt(j)=="("){cpt++;}
+							}
+							if(formule.charAt(j)!="-"){
+								affichage=affichage+'!(';
+							}
+							while(cpt>0){
+								i++;
+								affichage=affichage+formule.charAt(i);
+								if(formule.charAt(i)==")"){cpt--;}
+								if(formule.charAt(i)=="("){cpt++;}
+							}
+						}
+						if (formule.charAt(i)=="&"){
+							affichage=affichage+'|';
+						}
+						if (formule.charAt(i)=="|"){
+							affichage=affichage+'&';
+						}
+						if (formule.charAt(i)=="-"){
+							affichage=affichage+'&';
+						}
+						else{affichage=affichage+"!"+charAt(i);}
+					}
+					affichage=affichage+'</button><br><br><div id="d'+nbEtape+"2"+'><\div>';
+				}
+				
+			}
+			
+			if (formule.charAt(i+1)=="!"){
+				i+=2;
+			}
+			
+			else{
+				affichage=affichage+'!';
+			}
+		}
+
+
 		else{
+
 			affichage=affichage+formule.charAt(i);
+
 		}
-		
-	}
-		
-		
-		
-		
-		
+
 		
 	}
 	
+	
+
+	function verif(id){
+
+	/* id bouton vÃ©rif == nombre de bouton(nb sous formules) + num
+
+	ex: 1. avb / !b  id button vÃ©rif = v21
+
+
+
+	2. a / !b  id button vÃ©rif = v22
+
+
+
+	3. b / !b id button vÃ©rif = v23
+
+
+
+	*/
+
+	var tab= new Array();
+
+	var verif=false;
+
+	for( var i=0; i<id.charAT(1); i++ ){
+
+		idformule="f"+id.charAT(2)+i;
+
+		tab[i]= idformule.innerHTML;
+
+	}
+
+	for(var j=0; j<tab.length;j++){
+
+		for(var k=0; k<tab.length;k++){
+
+	var compare1="!"+tab[j];
+
+	var compare2= "!"+tab[k];
+
+	if(compare1==tab[k] || compare2==tab[j]){
+
+		verif=true;
+
+	}
+
+}
+
+
+
+}
+
+return verif;
+
+
+
+}
+
+		
+
+		
+
+		
+
+		
+
+		
+
+		
+
+}
+
+	
+
 }
 
 /* le code de mon jeux, je le garde en guise de pense bete pour quelques syntaxe (et petit memo au debut)
