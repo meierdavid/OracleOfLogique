@@ -64,7 +64,7 @@ function randomGame(){
 
 }
 
-function game(id, idDiv){
+/*function game(id, idDiv){
 
 	nbEtape++;
 
@@ -265,11 +265,393 @@ function game(id, idDiv){
 	
 	document.getElementById(idDiv).innerHTML = affichage;
 	
+
+}*/
+function game2(id,idDiv){
+	
+	nbEtape++;
+	console.log(id); 
+	console.log(idDiv);
+	
+	formule = id.innerHTML;
+
+	var ParcourTableau = 0;
+
+	var symbole;
+
+		
+	var affichage='';
+	const nouvelleDiv = document.createElement("div");
+	document.getElementById("main").appendChild(nouvelleDiv);
+	nouvelleDiv.id="d"+nbEtape+"1";
+	
+	console.log(formule.length);
+	
+	for (var i = 0; i<formule.length; i++){
+		symbole = formule.charAt(i);
+		console.log("i : "+ i);
+		
+
+		if (symbole=="("){
+			/*var for=parenthese(formule);
+			console.log("t : " +t);
+			
+			CETTE FONCTION PU SA RACE*/
+			var b = new bloc();
+			
+			b.debut= i+1;
+
+			var cpt =1;
+
+			while (cpt>0){
+				
+				i++;
+				
+				if(formule.charAt(i)==")"){cpt--;}
+
+				if(formule.charAt(i)=="("){cpt++;}				
+
+			}
+
+			b.fin=i-1;
+			
+			for (var j=b.debut; j<i;j++){
+				console.log("( : "+ formule.charAt(j) );
+				affichage= affichage+formule.charAt(j);
+				if(formule.charAt(j)=='&'){
+					j=j+4;
+				}
+				console.log("( : " + affichage);
+			}
+			symbole=formule.charAt(i+1);
+			i++;
+			console.log(symbole);
+		}
+	
+
+		if (symbole== "-"){
+			var f1 = affichage;
+			var f2="";
+			nbEtape++;		
+			/*if(formule.length==3){
+				f1=formule.charAt(0);
+				f2=formule.charAt(2);
+				impliqueAtomique(f1,f2,nbEtape)
+			}*/
+			
+			
+			i++;
+			while(i<formule.length){
+				
+				f2=f2+formule.charAt(i);
+				console.log(f2);
+				i++;
+				
+
+			}
+			if(f2.charAt(0)=="("){
+				console.log("f2 "+f2);
+				console.log("f1 " +f1);
+			f2=parenthese(f2);
+			implique(f1,f2,nbEtape);
+			}
+			else{
+				implique(f1,f2,nbEtape);
+				//impliqueAtomique(f1,f2,nbEtape);
+			}
+			
+			
+
+		}
+
+
+
+		if(symbole== "&"){
+			
+			f1=affichage;
+			console.log(affichage);
+			var f2="";
+			
+			nbEtape++;
+
+			i=i+6;
+
+			while(i<formule.length){
+				console.log(" & : " +f2);
+				f2=f2+formule.charAt(i);
+				console.log(f2);
+				i++;
+
+			}
+			f2=parenthese(f2);
+			conjonction(f1,f2,nbEtape);
+		}
+
+		
+
+		if(symbole== "|"){
+
+			var f1 = affichage;
+			var f2="";
+			
+			nbEtape++;
+
+			i++
+
+			while(i<formule.length){
+
+				f2=f2+formule.charAt(i);
+				console.log(f2);
+				i++;
+
+			}
+
+			disjonction(f1,f2,nbEtape);
+
+
+		}
+
+		if (symbole == "!"){
+			var sb="";
+			var af="";
+			var af2="";
+			var affichage2="";
+			if (formule.charAt(i+1)=="("){
+				console.log("! :"+formule.charAt(i+1));
+				j=i+1;
+				var cpt =1;
+				var nb=0;
+				while (cpt>0){
+
+					j++;
+					
+					if(formule.charAt(j)==")"){cpt--;nb++;}
+
+					if(formule.charAt(j)=="("){cpt++;}				
+
+				}
+				console.log("nbnbnbnbn" +nb);
+				if(nb==1){
+					var symb="";
+					console.log("dzqd " +formule.charAt(i));
+					
+					if(formule.charAt(i+2)=="!"){
+						f1=formule.charAt(i+2)+formule.charAt(i+3);
+						 symb=formule.charAt(i+4);
+						 if(formule.charAt(i+5)=="!"){
+							 f2=formule.charAt(i+5)+formule.charAt(i+6);
+						 }
+						 else{
+							 f2=formule.charAt(i+5);
+						 }
+					}
+					else{
+						f1=formule.charAt(i+2);
+						symb=formule.charAt(i+3);
+						f2=formule.charAt(i+4);
+					}			
+					
+					if (symb=="&"){
+						disjonction(f1,f2,nbEtape);
+							
+						}
+					if (symb=="|"){
+						conjonction(f1,f2,nbEtape);
+						
+						}
+					if (symb=="-"){
+						f2="!"+f2;
+						conjonction(f1,f2,nbEtape);
+						
+						}
+					//si une formule
+				}
+				else{
+					cpt=0;
+					
+					var x=1;
+					console.log("testetsse " +formule.charAt(x+1));
+					while(cpt<nb-1){
+						
+					console.log("x+1 " +formule.charAt(x+1));
+					if(formule.charAt(x+1)=="("){
+						cp=1;
+						cpt++;
+						af=af+"!";
+						af=af+formule.charAt(x+1);
+						while (cp==1){
+						x++;
+						console.log("add dans af "+formule.charAt(x+1));
+						af=af+formule.charAt(x+1);
+						if(formule.charAt(x+1)==")"){cp--;}
+
+						if(formule.charAt(x+1)=="("){cp++;}	
+																		
+						}
+					}				
+					symb=formule.charAt(x+2);
+					x=x+2;
+						console.log("aedzdqdzze"+af);
+						console.log("aedzdqdzze"+symb);
+					}
+					
+					
+				
+				
+					
+					if (sb=="&"){
+						f1=af;
+						f2=af2;
+						disjonction(f1,f2,nbEtape);
+							
+						}
+					if (sb=="|"){
+						f1=af
+						f2=af2;
+						conjonction(f1,f2,nbEtape);
+						
+						}
+					if (sb=="-"){
+						f1=af;
+						f2=af2;
+						conjonction(f1,f2,nbEtape);
+						
+						}
+					
+				//si pas sur toute la formule
+				}
+			
+			}
+	
+			
+			if (formule.charAt(i+1)=="!"){
+				i=i+2;
+			}
+			
+			else{
+				affichage=affichage+formule.charAt(i);
+			}
+		}
+
+
+		
+
+			affichage=affichage+formule.charAt(i);
+	
+		
+		console.log("aff :" +affichage +" i" + i);
+
+		
+	}
+	
+	const nouveauContenu = document.createElement("button");
+	
+	/*console.log(affichage);
+	nouveauContenu.innerHTML=affichage;
+	
+	nouveauContenu.id="f"+nbEtape+"1";
+
+
+	//nouveauContenu.onclick=game("f"+nbEtape+"1","'" +"d"+nbEtape+"1"+"'");
+	nouvelleDiv.appendChild(nouveauContenu);
+	var test=document.getElementById("f"+nbEtape+"1");
+	console.log(test);
+	nouveauContenu.setAttribute("onclick","game("+"f"+nbEtape+"1"+","+"d"+nbEtape+"1"+")");
+	//nouveauContenu.onclick= game(document.getElementById("f"+nbEtape+"1"),"'" +"d"+nbEtape+"1"+"'");
+*/
+}
+function implique(f1,f2,nbEtape){
+	const nouveauContenu = document.createElement("button");
+	const nouveauContenu2 = document.createElement("button");
+	const nouvelleDiv = document.createElement("div");
+	document.getElementById("main").appendChild(nouvelleDiv);
+	nouvelleDiv.appendChild(nouveauContenu);
+	nouvelleDiv.appendChild(nouveauContenu2);
+	nouvelleDiv.id="d"+nbEtape+"1";
+	if(f1.length<2){
+		nouveauContenu.innerHTML="!"+f1;
+	}
+	else{
+		nouveauContenu.innerHTML="!("+f1+")";
+	}
+	
+	nouveauContenu2.innerHTML=f2;
+	nouveauContenu.id="f"+nbEtape+"1";
+	nouveauContenu2.id="f"+nbEtape+"2";
+	nouveauContenu.setAttribute("onclick","game2("+"f"+nbEtape+"1"+","+"d"+nbEtape+"1"+")");
+	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"1"+")");
+}
+function impliqueAtomique(f1,f2,nbEtape){
+	const nouveauContenu = document.createElement("button");
+	const nouveauContenu2 = document.createElement("button");
+	const nouvelleDiv = document.createElement("div");
+	document.getElementById("main").appendChild(nouvelleDiv);
+	nouvelleDiv.appendChild(nouveauContenu);
+	nouvelleDiv.appendChild(nouveauContenu2);
+	nouvelleDiv.id="d"+nbEtape+"1";
+	nouveauContenu.innerHTML="!"+f1;
+	nouveauContenu2.innerHTML=f2;
+	nouveauContenu.id="f"+nbEtape+"1";
+	nouveauContenu2.id="f"+nbEtape+"2";
+	nouveauContenu.setAttribute("onclick","game2("+"f"+nbEtape+"1"+","+"d"+nbEtape+"1"+")");
+	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"1"+")");
+}
+function conjonction(f1,f2,nbEtape){
+	const nouveauContenu = document.createElement("button");
+	const nouveauContenu2 = document.createElement("button");
+	const nouvelleDiv = document.createElement("div");
+	document.getElementById("main").appendChild(nouvelleDiv);
+	nouvelleDiv.appendChild(nouveauContenu);
+	nouvelleDiv.appendChild(nouveauContenu2);
+	nouvelleDiv.id="d"+nbEtape+"1";
+	nouveauContenu.innerHTML=f1;
+	nouveauContenu2.innerHTML=f2;
+	nouveauContenu.id="f"+nbEtape+"1";
+	nouveauContenu2.id="f"+nbEtape+"2";
+	nouveauContenu.setAttribute("onclick","game2("+"f"+nbEtape+"1"+","+"d"+nbEtape+"1"+")");
+	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"1"+")");
+}
+function disjonction(f1,f2,nbEtape){
+	const nouveauContenu = document.createElement("button");
+	const nouveauContenu2 = document.createElement("button");
+	const nouvelleDiv = document.createElement("div");
+	document.getElementById("main").appendChild(nouvelleDiv);
+	nouvelleDiv.appendChild(nouveauContenu);
+	nouvelleDiv.appendChild(nouveauContenu2);
+	nouvelleDiv.id="d"+nbEtape+"1";
+	nouveauContenu.innerHTML=f1;
+	nouveauContenu2.innerHTML=f2;
+	nouveauContenu.id="f"+nbEtape+"1";
+	nouveauContenu2.id="f"+nbEtape+"2";
+	nouveauContenu.setAttribute("onclick","game2("+"f"+nbEtape+"1"+","+"d"+nbEtape+"1"+")");
+	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"1"+")");
 }
 
-	function verif(id){
+function parenthese(formule){
+	var affichage="";
+	var b = new bloc();		
+	b.debut=1;
+	var i =0;
+	var cpt =1;
+	while (cpt>0){			
+		i++;		
+		if(formule.charAt(i)==")"){cpt--;}
+		if(formule.charAt(i)=="("){cpt++;}				
+	}
+	b.fin=i-1;
+	for (var j=b.debut; j<i;j++){
+		
+		affichage= affichage+formule.charAt(j);
+		if(formule.charAt(j)=='&'){
+			j=j+4;
+		}	
+	}
+	return affichage;
+}
 
-	/* id bouton vérif == nombre de bouton(nb sous formules) + num
+	/*function verif(id){
+
+	 //id bouton vérif == nombre de bouton(nb sous formules) + num
 
 	ex: 1. avb / !b  id button vérif = v21
 
@@ -285,7 +667,7 @@ function game(id, idDiv){
 
 	*/
 
-	var tab= new Array();
+	/*var tab= new Array();
 
 	var verif=false;
 
@@ -321,7 +703,7 @@ return verif;
 
 
 
-}
+} */
 
 		
 
