@@ -412,124 +412,121 @@ function game2(id,idDiv){
 		}
 
 		if (symbole == "!"){
-			var sb="";
-			var af="";
-			var af2="";
-			var affichage2="";
+			var f1="affichage;
+			var f2="";
 			if (formule.charAt(i+1)=="("){
-				console.log("! :"+formule.charAt(i+1));
 				j=i+1;
 				var cpt =1;
-				var nb=0;
+
 				while (cpt>0){
 
 					j++;
-					
-					if(formule.charAt(j)==")"){cpt--;nb++;}
+
+					if(formule.charAt(j)==")"){cpt--;}
 
 					if(formule.charAt(j)=="("){cpt++;}				
 
 				}
-				console.log("nbnbnbnbn" +nb);
-				if(nb==1){
-					var symb="";
-					console.log("dzqd " +formule.charAt(i));
-					
-					if(formule.charAt(i+2)=="!"){
-						f1=formule.charAt(i+2)+formule.charAt(i+3);
-						 symb=formule.charAt(i+4);
-						 if(formule.charAt(i+5)=="!"){
-							 f2=formule.charAt(i+5)+formule.charAt(i+6);
-						 }
-						 else{
-							 f2=formule.charAt(i+5);
-						 }
+				if(j<formule.length-1){
+					while(i<=j){
+
+					f1=affichage+formule.charAt(i);
+					if(formule.charAt(i)=="&"){i=i+3};
+
+					i++;
+
 					}
-					else{
-						f1=formule.charAt(i+2);
-						symb=formule.charAt(i+3);
-						f2=formule.charAt(i+4);
-					}			
-					
-					if (symb=="&"){
-						disjonction(f1,f2,nbEtape);
-							
-						}
-					if (symb=="|"){
-						conjonction(f1,f2,nbEtape);
-						
-						}
-					if (symb=="-"){
-						f2="!"+f2;
-						conjonction(f1,f2,nbEtape);
-						
-						}
-					//si une formule
+					i=j;
 				}
 				else{
-					cpt=0;
-					
-					var x=1;
-					console.log("testetsse " +formule.charAt(x+1));
-					while(cpt<nb-1){
+					i++;
+					i++;
+					while(i<formule.length){
 						
-					console.log("x+1 " +formule.charAt(x+1));
-					if(formule.charAt(x+1)=="("){
-						cp=1;
-						cpt++;
-						af=af+"!";
-						af=af+formule.charAt(x+1);
-						while (cp==1){
-						x++;
-						console.log("add dans af "+formule.charAt(x+1));
-						af=af+formule.charAt(x+1);
-						if(formule.charAt(x+1)==")"){cp--;}
-
-						if(formule.charAt(x+1)=="("){cp++;}	
-																		
+						if (formule.charAt(i)=="("){
+							f1=f1+"("
+							cpt=1;
+							while(cpt>0){
+								i++;
+								f1=f1+formule.charAt(i);
+								if(formule.charAt(i)==")"){cpt--;}
+								if(formule.charAt(i)=="("){cpt++;}
+								if(formule.charAt(i)=="&"){i=i+3;}
+							}
 						}
-					}				
-					symb=formule.charAt(x+2);
-					x=x+2;
-						console.log("aedzdqdzze"+af);
-						console.log("aedzdqdzze"+symb);
+						
+						if (formule.charAt(i)=="&"){
+							j=i+4;
+							if (formule.charAt(j)=="!" && formule.charAt(j+1)=="("){j=j+2;}
+							else {
+								if (formule.charAt(j)=="!"){j++;}
+								else{f2="!";}	
+							}
+							while(j<formule.length){
+								f2=f2+formule.charAt(j):
+								if(formule.charAt(j)=="&"){j=j+3;}
+								j++;
+								
+							}
+							if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
+							f1="!"+f1;
+							disjonction(f1,f2,nbetape);
+							break;
+						}
+						if (formule.charAt(i)=="|"){
+							j=i+1;
+							if (formule.charAt(j)=="!" && formule.charAt(j+1)=="("){j=j+2;}
+							else {
+								if (formule.charAt(j)=="!"){j++;}
+								else{f2="!";}	
+							}
+							while(j<formule.length){
+								f2=f2+formule.charAt(j):
+								if(formule.charAt(j)=="&"){j=j+3;}
+								j++;
+								
+							}
+							if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
+							f1="!"+f1;
+							conjonction(f1,f2,nbetape);
+							break;
+						}
+						if (formule.charAt(i)=="-"){
+							j=i+1;
+							if (formule.charAt(j)=="!" && formule.charAt(j+1)=="("){j=j+2;}
+							else {
+								if (formule.charAt(j)=="!"){j++;}
+								else{f2="!";}	
+							}
+							while(j<formule.length){
+								f2=f2+formule.charAt(j):
+								if(formule.charAt(j)=="&"){j=j+3;}
+								j++;
+								
+							}
+							if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
+							conjonction(f1,f2,nbetape);
+							break;
+						}
+						if( formule.charAt(i)=="!"){
+							f1=f1+formule.charAt(i+1);
+							i++;
+						}
+						else{f1=f1+"!"+formule.charAt(i);}
+						i++;
 					}
-					
-					
-				
-				
-					
-					if (sb=="&"){
-						f1=af;
-						f2=af2;
-						disjonction(f1,f2,nbEtape);
-							
-						}
-					if (sb=="|"){
-						f1=af
-						f2=af2;
-						conjonction(f1,f2,nbEtape);
-						
-						}
-					if (sb=="-"){
-						f1=af;
-						f2=af2;
-						conjonction(f1,f2,nbEtape);
-						
-						}
-					
-				//si pas sur toute la formule
 				}
-			
-			}
-	
-			
-			if (formule.charAt(i+1)=="!"){
-				i=i+2;
+				
 			}
 			
 			else{
-				affichage=affichage+formule.charAt(i);
+				if (formule.charAt(i+1)=="!"){
+					i++;
+				}
+				
+				else{
+					f1=f1+"!";
+				}
 			}
 		}
 
