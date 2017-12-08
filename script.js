@@ -282,10 +282,11 @@ function game2(id,idDiv){
 		
 	var affichage='';
 	const nouvelleDiv = document.createElement("div");
+	
 	document.getElementById("main").appendChild(nouvelleDiv);
 	nouvelleDiv.id="d"+nbEtape+"1";
 	
-	console.log(formule.length);
+	console.log(formule);
 	
 	for (var i = 0; i<formule.length; i++){
 		symbole = formule.charAt(i);
@@ -354,9 +355,11 @@ function game2(id,idDiv){
 				console.log("f1 " +f1);
 			f2=parenthese(f2);
 			implique(f1,f2,nbEtape);
+			return;
 			}
 			else{
 				implique(f1,f2,nbEtape);
+				return;
 				//impliqueAtomique(f1,f2,nbEtape);
 			}
 			
@@ -385,6 +388,7 @@ function game2(id,idDiv){
 			}
 			f2=parenthese(f2);
 			conjonction(f1,f2,nbEtape);
+			return;
 		}
 
 		
@@ -407,12 +411,15 @@ function game2(id,idDiv){
 			}
 
 			disjonction(f1,f2,nbEtape);
+			return;
 
 
 		}
 
+		
 		if (symbole == "!"){
-			var f1="affichage;
+			console.log(affichage);
+			var f1=affichage;
 			var f2="";
 			if (formule.charAt(i+1)=="("){
 				j=i+1;
@@ -431,7 +438,7 @@ function game2(id,idDiv){
 					while(i<=j){
 
 					f1=affichage+formule.charAt(i);
-					if(formule.charAt(i)=="&"){i=i+3};
+					if(formule.charAt(i)=="&"){i=i+4};
 
 					i++;
 
@@ -451,10 +458,13 @@ function game2(id,idDiv){
 								f1=f1+formule.charAt(i);
 								if(formule.charAt(i)==")"){cpt--;}
 								if(formule.charAt(i)=="("){cpt++;}
-								if(formule.charAt(i)=="&"){i=i+3;}
+								if(formule.charAt(i)=="&"){i=i+4;}
 							}
+							i++;
 						}
-						
+						console.log(f1);
+						console.log(i);
+						console.log(formule.charAt(i));
 						if (formule.charAt(i)=="&"){
 							j=i+4;
 							if (formule.charAt(j)=="!" && formule.charAt(j+1)=="("){j=j+2;}
@@ -462,16 +472,17 @@ function game2(id,idDiv){
 								if (formule.charAt(j)=="!"){j++;}
 								else{f2="!";}	
 							}
-							while(j<formule.length){
-								f2=f2+formule.charAt(j):
-								if(formule.charAt(j)=="&"){j=j+3;}
+							while(j<formule.length-1){
+								f2=f2+formule.charAt(j);
+								if(formule.charAt(j)=="&"){j=j+4;}
 								j++;
 								
 							}
 							if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
 							f1="!"+f1;
-							disjonction(f1,f2,nbetape);
-							break;
+							console.log(f1);
+							disjonction(f1,f2,nbEtape);
+							return;
 						}
 						if (formule.charAt(i)=="|"){
 							j=i+1;
@@ -480,16 +491,17 @@ function game2(id,idDiv){
 								if (formule.charAt(j)=="!"){j++;}
 								else{f2="!";}	
 							}
-							while(j<formule.length){
-								f2=f2+formule.charAt(j):
-								if(formule.charAt(j)=="&"){j=j+3;}
+							while(j<formule.length-1){
+								f2=f2+formule.charAt(j);
+								if(formule.charAt(j)=="&"){j=j+4;}
 								j++;
 								
 							}
 							if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
 							f1="!"+f1;
-							conjonction(f1,f2,nbetape);
-							break;
+							console.log(f1);
+							conjonction(f1,f2,nbEtape);
+							return;
 						}
 						if (formule.charAt(i)=="-"){
 							j=i+1;
@@ -498,15 +510,16 @@ function game2(id,idDiv){
 								if (formule.charAt(j)=="!"){j++;}
 								else{f2="!";}	
 							}
-							while(j<formule.length){
-								f2=f2+formule.charAt(j):
-								if(formule.charAt(j)=="&"){j=j+3;}
+							while(j<formule.length-1){
+								f2=f2+formule.charAt(j);
+								if(formule.charAt(j)=="&"){j=j+4;}
 								j++;
 								
 							}
 							if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
-							conjonction(f1,f2,nbetape);
-							break;
+							console.log(f1);
+							conjonction(f1,f2,nbEtape);
+							return;
 						}
 						if( formule.charAt(i)=="!"){
 							f1=f1+formule.charAt(i+1);
@@ -524,16 +537,14 @@ function game2(id,idDiv){
 					i++;
 				}
 				
-				else{
-					f1=f1+"!";
-				}
+			
 			}
 		}
 
 
 		
 
-			affichage=affichage+formule.charAt(i);
+		affichage=affichage+formule.charAt(i);
 	
 		
 		console.log("aff :" +affichage +" i" + i);
@@ -558,6 +569,8 @@ function game2(id,idDiv){
 */
 }
 function implique(f1,f2,nbEtape){
+	console.log(f1);
+	console.log(f2);
 	const nouveauContenu = document.createElement("button");
 	const nouveauContenu2 = document.createElement("button");
 	const nouvelleDiv = document.createElement("div");
@@ -579,6 +592,8 @@ function implique(f1,f2,nbEtape){
 	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"1"+")");
 }
 function impliqueAtomique(f1,f2,nbEtape){
+	console.log(f1);
+	console.log(f2);
 	const nouveauContenu = document.createElement("button");
 	const nouveauContenu2 = document.createElement("button");
 	const nouvelleDiv = document.createElement("div");
@@ -594,6 +609,8 @@ function impliqueAtomique(f1,f2,nbEtape){
 	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"1"+")");
 }
 function conjonction(f1,f2,nbEtape){
+	console.log(f1);
+	console.log(f2);
 	const nouveauContenu = document.createElement("button");
 	const nouveauContenu2 = document.createElement("button");
 	const nouvelleDiv = document.createElement("div");
@@ -609,6 +626,8 @@ function conjonction(f1,f2,nbEtape){
 	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"1"+")");
 }
 function disjonction(f1,f2,nbEtape){
+	console.log(f1);
+	console.log(f2);
 	const nouveauContenu = document.createElement("button");
 	const nouveauContenu2 = document.createElement("button");
 	const nouvelleDiv = document.createElement("div");
