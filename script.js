@@ -1,7 +1,5 @@
 var score=0;
 
-var formule;
-
 var nbEtape=0;
 
 function bloc(){
@@ -16,13 +14,13 @@ function randomGame(){
 
   var tab = new Array();
 
-  tab[0]="!(p-((p-q)-q)))";
+  tab[0]="!(p-((p-q)-q))";
 
   tab[1]="!(p-(!q-!(p-q)))";
 
   tab[2]="!((!p-!q)-(q-p))";
 
-  tab[3]="!((p&(p-q)&((p-q)-r))-p&q&r))";
+  tab[3]="!((p&(p-q)&((p-q)-r))-(p&q&r))";
 
   tab[4]="!((p-q)-((q-r)-(p-r)))";
 
@@ -40,9 +38,9 @@ function randomGame(){
 
   tab[11]="!(((p-q)&(q-p))|(p&!p)|(!p&q))";
 
-  tab[12]="!((!(a&b)-(!a|!b))";
+  tab[12]="!(!(a&b)-(!a|!b))";
 
-  tab[13]="!(((!a|!b)-!(a&b))";
+  tab[13]="!((!a|!b)-!(a&b))";
 
   tab[14]="!(((a|b|!c)&(&|b|c)&(a|!b))-a)";
 
@@ -68,7 +66,7 @@ function randomGame(){
 
 	nbEtape++;
 
-	formule = id.innerHTML;
+	var formule = id.innerHTML;
 
 	var ParcourTableau = 0;
 
@@ -273,7 +271,7 @@ function game2(id,idDiv){
 	console.log(id); 
 	console.log(idDiv);
 	
-	formule = id.innerHTML;
+	var formule = id.innerHTML;
 
 	var ParcourTableau = 0;
 
@@ -353,11 +351,14 @@ function game2(id,idDiv){
 			if(f2.charAt(0)=="("){
 				console.log("f2 "+f2);
 				console.log("f1 " +f1);
+			f1=parenthese(f1);
 			f2=parenthese(f2);
 			implique(f1,f2,nbEtape);
 			return;
 			}
 			else{
+				f1=parenthese(f1);
+				f2=parenthese(f2);
 				implique(f1,f2,nbEtape);
 				return;
 				//impliqueAtomique(f1,f2,nbEtape);
@@ -386,6 +387,7 @@ function game2(id,idDiv){
 				i++;
 
 			}
+			f1=parenthese(f1);
 			f2=parenthese(f2);
 			conjonction(f1,f2,nbEtape);
 			return;
@@ -409,7 +411,8 @@ function game2(id,idDiv){
 				i++;
 
 			}
-
+			f1=parenthese(f1);
+			f2=parenthese(f2);
 			disjonction(f1,f2,nbEtape);
 			return;
 
@@ -478,9 +481,11 @@ function game2(id,idDiv){
 								j++;
 								
 							}
-							if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
+							//if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
 							f1="!"+f1;
 							console.log(f1);
+							f1=parenthese(f1);
+							f2=parenthese(f2);
 							disjonction(f1,f2,nbEtape);
 							return;
 						}
@@ -497,9 +502,11 @@ function game2(id,idDiv){
 								j++;
 								
 							}
-							if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
+							//if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
 							f1="!"+f1;
 							console.log(f1);
+							f1=parenthese(f1);
+							f2=parenthese(f2);
 							conjonction(f1,f2,nbEtape);
 							return;
 						}
@@ -516,8 +523,10 @@ function game2(id,idDiv){
 								j++;
 								
 							}
-							if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
+							//if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
 							console.log(f1);
+							f1=parenthese(f1);
+							f2=parenthese(f2);
 							conjonction(f1,f2,nbEtape);
 							return;
 						}
@@ -525,7 +534,7 @@ function game2(id,idDiv){
 							f1=f1+formule.charAt(i+1);
 							i++;
 						}
-						else{f1=f1+"!"+formule.charAt(i);}
+						else{f1=f1+formule.charAt(i);}
 						i++;
 					}
 				}
@@ -644,25 +653,42 @@ function disjonction(f1,f2,nbEtape){
 }
 
 function parenthese(formule){
+	console.log("loutre");
 	var affichage="";
-	var b = new bloc();		
-	b.debut=1;
-	var i =0;
+	j=0;
 	var cpt =1;
-	while (cpt>0){			
-		i++;		
-		if(formule.charAt(i)==")"){cpt--;}
-		if(formule.charAt(i)=="("){cpt++;}				
+	if (formule.charAt(0)!="("){cpt=0;}
+	while (cpt>0){
+
+		j++;
+
+		if(formule.charAt(j)==")"){cpt--;}
+
+		if(formule.charAt(j)=="("){cpt++;}				
+
 	}
-	b.fin=i-1;
-	for (var j=b.debut; j<i;j++){
-		
-		affichage= affichage+formule.charAt(j);
-		if(formule.charAt(j)=='&'){
-			j=j+4;
-		}	
+	if(j==formule.length-1 && formule.charAt(0)=="("){
+		var b = new bloc();		
+		b.debut=1;
+		var i =0;
+		var cpt =1;
+		while (cpt>0){			
+			i++;		
+			if(formule.charAt(i)==")"){cpt--;}
+			if(formule.charAt(i)=="("){cpt++;}				
+		}
+		b.fin=i-1;
+		for (var j=b.debut; j<i;j++){
+			
+			affichage= affichage+formule.charAt(j);
+			if(formule.charAt(j)=='&'){
+				j=j+4;
+			}	
+		}
+		return affichage;
 	}
-	return affichage;
+	else{ return formule;}
+	
 }
 
 	/*function verif(id){
