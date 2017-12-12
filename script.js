@@ -271,8 +271,15 @@ function game2(id,idDiv){
 	console.log(id); 
 	console.log(idDiv);
 	
-	var formule = id.innerHTML;
-
+	var ftemp = id.innerHTML;
+	var formule = "";
+	
+	for (var i=0; i<formule.length; i++){
+		formule=formule+ ftemp.chartAt(i);
+		if ( ftemp.chartAt(i)==&){i=i+4);
+		}
+	}
+	
 	var ParcourTableau = 0;
 
 	var symbole;
@@ -317,9 +324,6 @@ function game2(id,idDiv){
 			for (var j=b.debut; j<i;j++){
 				console.log("( : "+ formule.charAt(j) );
 				affichage= affichage+formule.charAt(j);
-				if(formule.charAt(j)=='&'){
-					j=j+4;
-				}
 				console.log("( : " + affichage);
 			}
 			symbole=formule.charAt(i+1);
@@ -438,10 +442,10 @@ function game2(id,idDiv){
 
 				}
 				if(j<formule.length-1){
+					console.log("cas 1");
 					while(i<=j){
 
 					f1=affichage+formule.charAt(i);
-					if(formule.charAt(i)=="&"){i=i+4};
 
 					i++;
 
@@ -461,7 +465,6 @@ function game2(id,idDiv){
 								f1=f1+formule.charAt(i);
 								if(formule.charAt(i)==")"){cpt--;}
 								if(formule.charAt(i)=="("){cpt++;}
-								if(formule.charAt(i)=="&"){i=i+4;}
 							}
 							i++;
 						}
@@ -469,7 +472,6 @@ function game2(id,idDiv){
 						console.log(i);
 						console.log(formule.charAt(i));
 						if (formule.charAt(i)=="&"){
-							j=i+4;
 							if (formule.charAt(j)=="!" && formule.charAt(j+1)=="("){j=j+2;}
 							else {
 								if (formule.charAt(j)=="!"){j++;}
@@ -681,9 +683,7 @@ function parenthese(formule){
 		for (var j=b.debut; j<i;j++){
 			
 			affichage= affichage+formule.charAt(j);
-			if(formule.charAt(j)=='&'){
-				j=j+4;
-			}	
+
 		}
 		return affichage;
 	}
