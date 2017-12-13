@@ -159,11 +159,7 @@ function game2(id,idDiv){
 			var f1 = affichage;
 			var f2="";
 			nbEtape++;		
-			/*if(formule.length==3){
-				f1=formule.charAt(0);
-				f2=formule.charAt(2);
-				impliqueAtomique(f1,f2,nbEtape)
-			}*/
+
 			
 			
 			i++;
@@ -175,27 +171,22 @@ function game2(id,idDiv){
 				
 
 			}
-			if(f2.charAt(0)=="("){
-				console.log("f2 "+f2);
-				console.log("f1 " +f1);
-			f1=parenthese(f1);
-			f2=parenthese(f2);
-			implique(f1,f2,nbEtape);
-			recopie2(id.id,nbEtape);
-			return;
+			if (f1.charAt(0)=="!"){
+				f1=parenthese(f1.substring(1));
 			}
 			else{
 				f1=parenthese(f1);
-				f2=parenthese(f2);
-				implique(f1,f2,nbEtape);
-				recopie2(id.id,nbEtape);
-				return;
-				//impliqueAtomique(f1,f2,nbEtape);
+				f1="!("+f1+")";
+				if (f1.length==5){f1=f1.charAt(3);}
+				if (f1.length==4){f1="!"+f1.charAt(2);}
 			}
-			
-			
-
+			f1=parenthese(f1);
+			f2=parenthese(f2);
+			disjonction(f1,f2,nbEtape);
+			recopie(id.id,nbEtape);
+			return;
 		}
+
 
 
 
@@ -308,7 +299,7 @@ function game2(id,idDiv){
 							if (f2.length==5){f2=f2.charAt(3);}
 							if (f2.length==4){f2="!"+f2.charAt(2);}
 							disjonction(f1,f2,nbEtape);
-							recopie2(id.id,nbEtape);
+							recopie(id.id,nbEtape);
 							return;
 						}
 						if (formule.charAt(i)=="|"){
@@ -333,19 +324,36 @@ function game2(id,idDiv){
 								f2=f2+formule.charAt(j);
 								j++;
 							}
-							f2=parenthese(f2);
-							f2="!("+f2+")";
-							if (f2.length==5){f2=f2.charAt(3);}
-							if (f2.length==4){f2="!"+f2.charAt(2);}
+							if (f2.charAt(0)=="!" && f2.charAt(1)=="("){
+								var t=1;
+								var cpt =1;
+
+								while (cpt>0){
+
+									t++;
+
+									if(f2.charAt(t)==")"){cpt--;}
+
+									if(f2.charAt(t)=="("){cpt++;}				
+
+								}
+								if(t>=f2.length-1){
+									f2=parenthese(f2.substring(1));
+								}
+							}
+							else{
+								f2=parenthese(f2);
+								f2="!("+f2+")";
+								if (f2.length==5){f2=f2.charAt(3);}
+								if (f2.length==4){f2="!"+f2.charAt(2);}
+							}
+							
 							f1=parenthese(f1);
 							conjonction(f1,f2,nbEtape);
 							recopie(id.id,nbEtape);
 							return;
 						}
-						/*if( formule.charAt(i)=="!"){
-							f1=f1+formule.charAt(i+1);
-							i++;
-						}*/
+
 						else{f1=f1+formule.charAt(i);}
 						i++;
 					}
@@ -353,13 +361,6 @@ function game2(id,idDiv){
 				
 			}
 			
-			else{
-				if (formule.charAt(i+1)=="!"){
-					i++;
-				}
-				
-			
-			}
 		}
 
 
@@ -605,10 +606,10 @@ function parenthese(formule){
 	
 }
 	/*function verif(id){
-	 //id bouton vérif == nombre de bouton(nb sous formules) + num
-	ex: 1. avb / !b  id button vérif = v21
-	2. a / !b  id button vérif = v22
-	3. b / !b id button vérif = v23
+	 //id bouton vÃ©rif == nombre de bouton(nb sous formules) + num
+	ex: 1. avb / !b  id button vÃ©rif = v21
+	2. a / !b  id button vÃ©rif = v22
+	3. b / !b id button vÃ©rif = v23
 	*/
 
 	/*var tab= new Array();
@@ -776,7 +777,7 @@ return verif;
 
 
 /* le code de mon jeux, je le garde en guise de pense bete pour quelques syntaxe (et petit memo au debut)
-memo: negation ¬ alt+0172
+memo: negation Â¬ alt+0172
 	 et ^ 
 	 ou ?
 	 implique ?
@@ -805,7 +806,7 @@ function ennemi(){
 	this.idf=genereID();
 	this.b=new boite();
 	this.i=document.getElementById(this.idf);
-}//id ennemi, unique , incrementer id, reinitialiser remove child à partir du moment ou il atteind un des bords
+}//id ennemi, unique , incrementer id, reinitialiser remove child Ã  partir du moment ou il atteind un des bords
 function init(){
 	s = document.getElementById('surface');
 	bloc = document.getElementById('bloc');
@@ -881,9 +882,9 @@ function modifPos(obj, t, l) {
       }
 	  
 function collision(box1, box2){
-	//déjà fait modifier..
-	 if((box2.x >= box1.x + box1.w)      // trop à droite
-	|| (box2.x + box2.w <= box1.x) // trop à gauche
+	//dÃ©jÃ  fait modifier..
+	 if((box2.x >= box1.x + box1.w)      // trop Ã  droite
+	|| (box2.x + box2.w <= box1.x) // trop Ã  gauche
 	|| (box2.y >= box1.y + box1.h) // trop en bas
 	|| (box2.y + box2.h <= box1.y))  // trop en haut
           return false; 
@@ -894,7 +895,7 @@ function collision(box1, box2){
 async function move(k) {
     var key = k.keyCode ? k.keyCode : k.which;
    
-    //unité de déplacement en fonction de la taille de l'image
+    //unitÃ© de dÃ©placement en fonction de la taille de l'image
     position = document.getElementById('joueur');
     for(var i=0; i<12; i++){
 		if (key == 40) {//bas
@@ -938,7 +939,7 @@ async function move(k) {
        j1.tete.x+=unit;
 	   j1.corps.x+=unit;
        modifPos(position, 0, unit);
-				 // déplacement ICONE
+				 // dÃ©placement ICONE
       }
 	 else{
 		j1.tete.x-=unit*7;
@@ -964,7 +965,7 @@ async function partie(){
 		await sleep(10000);
 	}
 	
-	alert("felicitation vous avez gagné")
+	alert("felicitation vous avez gagnÃ©")
 	return null;
 }
 async function deroulementNiveau(){
@@ -984,7 +985,7 @@ async function deroulementNiveau(){
 						}
 						else{
 							bloc.removeChild(position);
-							alert("tué par un poisson pané, vous n'avez pas honte?!");
+							alert("tuÃ© par un poisson panÃ©, vous n'avez pas honte?!");
 							return null;
 						}
 					}
