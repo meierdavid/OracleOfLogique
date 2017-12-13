@@ -63,143 +63,76 @@ function randomGame(){
 }
 
 /*function game(id, idDiv){
-
 	nbEtape++;
-
 	var formule = id.innerHTML;
-
 	var ParcourTableau = 0;
-
 	var symbole;
-
 	var affichage='<button onclick="game(this,'+"d"+nbEtape+"1"+')" id="f'+nbEtape+"1"+'" type="button">';
-
 	for (var i; i<formule.length; i++){
-
 		symbole=formule.charAT(i);
-
 		
-
 		if (symbole=="("){
-
 			if (i>0){
-
 				
-
 			}
-
 			var b = new bloc();
-
 			b.debut= i+1;
-
 			var cpt =1;
-
 			while (cpt>0){
-
 				i++;
-
 				if(formule.charAt(i)==")"){cpt--;}
-
 				if(formule.charAt(i)=="("){cpt++;}				
-
 			}
-
 			b.fin=i-1;
-
 			for (var j=b.debut; j<i;j++){
-
 				affichage= affichage+formule.charAt(j);
-
 			}
-
 			
-
 			
-
 		}
-
 		
-
 		if (symbole== "-"){
-
 			nbEtape++;
-
 			affichage = "!("+affichage+')</button>			<button onclick="game(this,'+"d"+nbEtape+"2"+')" id="f'+nbEtape+"2"+'" type="button">';
-
 			i++
-
 			while(i<formule.length){
-
 				affichage=affichage+formule.charAt(i);
-
 				i++;
-
 			}
-
 			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'"><\div> 		<div id="d'+nbEtape+"2"+'"><\div>';
-
 			
-
 		}
-
-
-
 		if(symbole== "&"){
-
 			affichage=affichage+'</button><br><button onclick="game(this,'+"d"+nbEtape+"1"+')" id="f'+nbEtape+"2"+'" type="button">';
-
 			while(i<formule.length){
-
 				affichage=affichage+formule.charAt(i);
-
 				i++;
-
 			}
-
 			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'"><\div>';
-
 		}
-
 		
-
 		if(symbole== "|"){
-
 			affichage=affichage+'</button>		<button onclick="game(this,'+"d"+nbEtape+"2"+')" id="f'+nbEtape+"2"+'" type="button">';
 			i++;
-
 			while(i<formule.length){
-
 				affichage=affichage+formule.charAt(i);
-
 				i++;
-
 			}
-
 			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'"><\div> 		<div id="d'+nbEtape+"2"+'"><\div>';
-
 		}
-
 		if (symbole == "!"){
 			if (formule.charAt(i+1)=="("){
 				j=i+1;
 				var cpt =1;
-
 				while (cpt>0){
-
 					j++;
-
 					if(formule.charAt(j)==")"){cpt--;}
-
 					if(formule.charAt(j)=="("){cpt++;}				
-
 				}
 				if(j<formule.length-1){
 					while(i<formule.length){
-
 					affichage=affichage+formule.charAt(i);
-
 					i++;
-
 					}
 					
 				}
@@ -249,35 +182,52 @@ function randomGame(){
 				affichage=affichage+'!';
 			}
 		}
-
-
 		else{
-
 			affichage=affichage+formule.charAt(i);
-
 		}
-
 		
 	}
 	
 	
 	document.getElementById(idDiv).innerHTML = affichage;
 	
-
 }*/
+
+function verouillage(id){
+	var parcoursID="";
+	var j=0;
+	var bout;
+	for(var i=1;i<id.length;i++){
+		parcoursID=parcoursID+id.charAt(i);
+	}
+	var test= 0;
+	test=eval(parcoursID);
+	console.log("test"+test);
+	while(document.getElementById("f"+test)!=null){
+		console.log("numid" +"f"+test);
+		console.log("numid" +document.getElementById("f"+test));
+		bout=document.getElementById("f"+test);
+		bout.removeAttribute("onclick");
+		j++;
+		test=eval(parcoursID)+j;
+	}
+	
+}
 function game2(id,idDiv){
 	
 	nbEtape++;
 	console.log(id); 
 	console.log(idDiv);
+	id.style.backgroundColor="grey";
 	
+	verouillage(id.id);
 	var ftemp = id.innerHTML;
 	var formule = "";
 	
-	for (var i = 0; i<ftemp.length; i++){
-		formule = formule + ftemp.charAt(i);
-		if ( ftemp.charAt(i)=="&"){i=i+4};
-		console.log(formule);
+	for (var i=0; i<ftemp.length; i++){
+		formule=formule + ftemp.charAt(i);
+		if ( ftemp.charAt(i)=='&'){i=i+4;
+		}
 	}
 	
 	var ParcourTableau = 0;
@@ -289,9 +239,8 @@ function game2(id,idDiv){
 	const nouvelleDiv = document.createElement("div");
 	
 	document.getElementById("main").appendChild(nouvelleDiv);
-	nouvelleDiv.id="d"+nbEtape+"1";
 	
-	console.log(formule);
+	nouvelleDiv.style.height="22px";
 	
 	for (var i = 0; i<formule.length; i++){
 		symbole = formule.charAt(i);
@@ -394,6 +343,7 @@ function game2(id,idDiv){
 			f1=parenthese(f1);
 			f2=parenthese(f2);
 			conjonction(f1,f2,nbEtape);
+			recopie(id.id,nbEtape);
 			return;
 		}
 
@@ -510,6 +460,7 @@ function game2(id,idDiv){
 							f1=parenthese(f1);
 							f2=parenthese(f2);
 							conjonction(f1,f2,nbEtape);
+							recopie(id.id,nbEtape);
 							return;
 						}
 						if (formule.charAt(i)=="-"){
@@ -530,6 +481,7 @@ function game2(id,idDiv){
 							f1=parenthese(f1);
 							f2=parenthese(f2);
 							conjonction(f1,f2,nbEtape);
+							recopie(id.id,nbEtape);
 							return;
 						}
 						if( formule.charAt(i)=="!"){
@@ -569,8 +521,6 @@ function game2(id,idDiv){
 	nouveauContenu.innerHTML=affichage;
 	
 	nouveauContenu.id="f"+nbEtape+"1";
-
-
 	//nouveauContenu.onclick=game("f"+nbEtape+"1","'" +"d"+nbEtape+"1"+"'");
 	nouvelleDiv.appendChild(nouveauContenu);
 	var test=document.getElementById("f"+nbEtape+"1");
@@ -579,45 +529,90 @@ function game2(id,idDiv){
 	//nouveauContenu.onclick= game(document.getElementById("f"+nbEtape+"1"),"'" +"d"+nbEtape+"1"+"'");
 */
 }
+
+function recopie(id,nbEtape){
+	var parcoursID="";
+	var j=0;
+	var bout;
+	for(var i=1;i<id.length-1;i++){
+		parcoursID=parcoursID+id.charAt(i);
+	}
+	var test= 0;
+	var compt=3;
+	test=parcoursID+1;
+	console.log("test"+test);
+	while(document.getElementById("f"+test)!=null){
+		if("f"+test!=id){
+			
+			const nouveauContenu = document.createElement("button");
+			const nouvelleDiv = document.createElement("div");
+			nouveauContenu.innerHTML=document.getElementById("f"+test).innerHTML;
+			nouvelleDiv.appendChild(nouveauContenu);
+			document.getElementById("main").appendChild(nouvelleDiv);
+			nouvelleDiv.style.textAlign='center';
+			nouvelleDiv.id="d"+nbEtape+compt;
+			nouveauContenu.id="f"+nbEtape+compt;
+			nouveauContenu.setAttribute("onclick","game2("+"f"+nbEtape+compt+","+"d"+nbEtape+compt+")");
+			compt++;
+		}
+		j++;
+		test=eval(parcoursID)+j;
+	}
+	
+}
 function implique(f1,f2,nbEtape){
 	console.log(f1);
 	console.log(f2);
 	const nouveauContenu = document.createElement("button");
 	const nouveauContenu2 = document.createElement("button");
 	const nouvelleDiv = document.createElement("div");
+	const nouvelleDiv2 = document.createElement("div");
 	document.getElementById("main").appendChild(nouvelleDiv);
+	document.getElementById("main").appendChild(nouvelleDiv2);
+	nouvelleDiv.style.textAlign='center';
+	nouvelleDiv2.style.textAlign='center';
+	nouvelleDiv.style.position="relative";
+	nouvelleDiv2.style.position="relative";
+	nouvelleDiv.style.right="30px";
+	nouvelleDiv2.style.left="30px";
+	nouvelleDiv2.style.bottom="21px";
 	nouvelleDiv.appendChild(nouveauContenu);
-	nouvelleDiv.appendChild(nouveauContenu2);
+	nouvelleDiv2.appendChild(nouveauContenu2);
 	nouvelleDiv.id="d"+nbEtape+"1";
-	if(f1.length<2){
-		nouveauContenu.innerHTML="!"+f1;
-	}
-	else{
-		nouveauContenu.innerHTML="!("+f1+")";
-	}
-	
+	nouvelleDiv2.id="d"+nbEtape+"2";
+	nouveauContenu.innerHTML="!"+f1;
 	nouveauContenu2.innerHTML=f2;
 	nouveauContenu.id="f"+nbEtape+"1";
 	nouveauContenu2.id="f"+nbEtape+"2";
 	nouveauContenu.setAttribute("onclick","game2("+"f"+nbEtape+"1"+","+"d"+nbEtape+"1"+")");
-	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"1"+")");
-}
+	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"2"+")");
+	}
 function impliqueAtomique(f1,f2,nbEtape){
 	console.log(f1);
 	console.log(f2);
 	const nouveauContenu = document.createElement("button");
 	const nouveauContenu2 = document.createElement("button");
 	const nouvelleDiv = document.createElement("div");
+	const nouvelleDiv2 = document.createElement("div");
 	document.getElementById("main").appendChild(nouvelleDiv);
+	document.getElementById("main").appendChild(nouvelleDiv2);
+	nouvelleDiv.style.textAlign='center';
+	nouvelleDiv2.style.textAlign='center';
+	nouvelleDiv.style.position="relative";
+	nouvelleDiv2.style.position="relative";
+	nouvelleDiv.style.right="5px";
+	nouvelleDiv2.style.left="5px";
 	nouvelleDiv.appendChild(nouveauContenu);
-	nouvelleDiv.appendChild(nouveauContenu2);
+	nouvelleDiv2.appendChild(nouveauContenu2);
 	nouvelleDiv.id="d"+nbEtape+"1";
+	nouvelleDiv2.id="d"+nbEtape+"2";
 	nouveauContenu.innerHTML="!"+f1;
 	nouveauContenu2.innerHTML=f2;
 	nouveauContenu.id="f"+nbEtape+"1";
 	nouveauContenu2.id="f"+nbEtape+"2";
 	nouveauContenu.setAttribute("onclick","game2("+"f"+nbEtape+"1"+","+"d"+nbEtape+"1"+")");
-	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"1"+")");
+	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"2"+")");
+	
 }
 function conjonction(f1,f2,nbEtape){
 	console.log(f1);
@@ -625,33 +620,48 @@ function conjonction(f1,f2,nbEtape){
 	const nouveauContenu = document.createElement("button");
 	const nouveauContenu2 = document.createElement("button");
 	const nouvelleDiv = document.createElement("div");
+	const nouvelleDiv2 = document.createElement("div");
 	document.getElementById("main").appendChild(nouvelleDiv);
+	document.getElementById("main").appendChild(nouvelleDiv2);
+	nouvelleDiv.style.textAlign='center';
+	nouvelleDiv2.style.textAlign='center';
 	nouvelleDiv.appendChild(nouveauContenu);
-	nouvelleDiv.appendChild(nouveauContenu2);
+	nouvelleDiv2.appendChild(nouveauContenu2);
 	nouvelleDiv.id="d"+nbEtape+"1";
+	nouvelleDiv2.id="d"+nbEtape+"2";
 	nouveauContenu.innerHTML=f1;
 	nouveauContenu2.innerHTML=f2;
 	nouveauContenu.id="f"+nbEtape+"1";
 	nouveauContenu2.id="f"+nbEtape+"2";
 	nouveauContenu.setAttribute("onclick","game2("+"f"+nbEtape+"1"+","+"d"+nbEtape+"1"+")");
-	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"1"+")");
-}
+	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"2"+")");
+	}
 function disjonction(f1,f2,nbEtape){
 	console.log(f1);
 	console.log(f2);
 	const nouveauContenu = document.createElement("button");
 	const nouveauContenu2 = document.createElement("button");
 	const nouvelleDiv = document.createElement("div");
+	const nouvelleDiv2 = document.createElement("div");
 	document.getElementById("main").appendChild(nouvelleDiv);
+	document.getElementById("main").appendChild(nouvelleDiv2);
+	nouvelleDiv.style.textAlign='center';
+	nouvelleDiv2.style.textAlign='center';
+	nouvelleDiv.style.position="relative";
+	nouvelleDiv2.style.position="relative";
+	nouvelleDiv.style.right="5px";
+	nouvelleDiv2.style.left="5px";
 	nouvelleDiv.appendChild(nouveauContenu);
-	nouvelleDiv.appendChild(nouveauContenu2);
+	nouvelleDiv2.appendChild(nouveauContenu2);
 	nouvelleDiv.id="d"+nbEtape+"1";
+	nouvelleDiv2.id="d"+nbEtape+"2";
 	nouveauContenu.innerHTML=f1;
 	nouveauContenu2.innerHTML=f2;
 	nouveauContenu.id="f"+nbEtape+"1";
 	nouveauContenu2.id="f"+nbEtape+"2";
 	nouveauContenu.setAttribute("onclick","game2("+"f"+nbEtape+"1"+","+"d"+nbEtape+"1"+")");
-	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"1"+")");
+	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"2"+")");
+	
 }
 
 function parenthese(formule){
@@ -692,59 +702,28 @@ function parenthese(formule){
 }
 
 	/*function verif(id){
-
-	 //id bouton vÃ©rif == nombre de bouton(nb sous formules) + num
-
-	ex: 1. avb / !b  id button vÃ©rif = v21
-
-
-
-	2. a / !b  id button vÃ©rif = v22
-
-
-
-	3. b / !b id button vÃ©rif = v23
-
-
-
+	 //id bouton vérif == nombre de bouton(nb sous formules) + num
+	ex: 1. avb / !b  id button vérif = v21
+	2. a / !b  id button vérif = v22
+	3. b / !b id button vérif = v23
 	*/
 
 	/*var tab= new Array();
-
 	var verif=false;
-
 	for( var i=0; i<id.charAT(1); i++ ){
-
 		idformule="f"+id.charAT(2)+i;
-
 		tab[i]= idformule.innerHTML;
-
 	}
-
 	for(var j=0; j<tab.length;j++){
-
 		for(var k=0; k<tab.length;k++){
-
 			var compare1="!"+tab[j];
-
 			var compare2= "!"+tab[k];
-
 			if(compare1==tab[k] || compare2==tab[j]){
-
 				verif=true;
-
 			}
-
 		}
-
-
-
 	}
-
 return verif;
-
-
-
 } */
 
 		
@@ -765,50 +744,37 @@ return verif;
 
 
 
-/* le code de mon jeux, je le garde en guise de pense bete pour quelques syntaxe (et petit memo au debut)
-
-memo: negation Â¬ alt+0172
-	 et Ë„ 
-	 ou Ë…
-	 implique â†’
+//le code de mon jeux, je le garde en guise de pense bete pour quelques syntaxe (et petit memo au debut)
+/*memo: negation ¬ alt+0172
+	 et ^ 
+	 ou ?
+	 implique ?
 	 
 var myString = 'Pauline';
-
 var first = myString.charAt(0); // P
 var last = myString.charAt(myString.length - 1); // e
-
 <button onclick="game(f1)">f1</button> 
-
-
-
-
-
-
 function boite(){
 	this.x=0;
 	this.y=0;
 	this.w=0;
 	this.h=0;
 }
-
 function joueur(){
 	this.tete= new boite();
 	this.corps=new boite();
 }
-
 function genereID(){
 	var t=id;
 	id++;
 	return t;
 	
 }
-
 function ennemi(){
 	this.idf=genereID();
 	this.b=new boite();
 	this.i=document.getElementById(this.idf);
-}//id ennemi, unique , incrementer id, reinitialiser remove child Ã  partir du moment ou il atteind un des bords
-
+}//id ennemi, unique , incrementer id, reinitialiser remove child à partir du moment ou il atteind un des bords
 function init(){
 	s = document.getElementById('surface');
 	bloc = document.getElementById('bloc');
@@ -819,7 +785,6 @@ function init(){
 	unit=1;
 	partie();
 }
-
 function initSurf(){
 	surf= new boite();
 	surf.x=s.style.left;
@@ -827,7 +792,6 @@ function initSurf(){
 	surf.w=s.width;
 	surf.h=s.height;	
 }
-
 function initJoueur(){
 	//coordonnee alea dans la plage de def, x, y, w, h avec w h fixe
 	//var unit= s.width/20;
@@ -843,7 +807,6 @@ function initJoueur(){
 	j1.corps.y =j1.tete.y+j1.tete.h;
 	j1.corps.w =taille;
 	j1.corps.h =taille*1.38*0.8;
-
 	
 	
 	j.style.width=taille+"px";
@@ -853,7 +816,6 @@ function initJoueur(){
 	j.style.left=j1.tete.x+"px";
 	j.style.top=j1.tete.y+"px";
 }
-
 function initEnnemi(){
 	var e = new ennemi();
 	e.y=15;
@@ -882,16 +844,15 @@ function initEnnemi(){
 	return e;
 	
 }
-
 function modifPos(obj, t, l) { 
    	obj.style.top =obj.offsetTop+parseInt(t)+"px";
    	obj.style.left =obj.offsetLeft +parseInt(l)+"px";
       }
 	  
 function collision(box1, box2){
-	//dÃ©jÃ  fait modifier..
-	 if((box2.x >= box1.x + box1.w)      // trop Ã  droite
-	|| (box2.x + box2.w <= box1.x) // trop Ã  gauche
+	//déjà fait modifier..
+	 if((box2.x >= box1.x + box1.w)      // trop à droite
+	|| (box2.x + box2.w <= box1.x) // trop à gauche
 	|| (box2.y >= box1.y + box1.h) // trop en bas
 	|| (box2.y + box2.h <= box1.y))  // trop en haut
           return false; 
@@ -902,7 +863,7 @@ function collision(box1, box2){
 async function move(k) {
     var key = k.keyCode ? k.keyCode : k.which;
    
-    //unitÃ© de dÃ©placement en fonction de la taille de l'image
+    //unité de déplacement en fonction de la taille de l'image
     position = document.getElementById('joueur');
     for(var i=0; i<12; i++){
 		if (key == 40) {//bas
@@ -946,7 +907,7 @@ async function move(k) {
        j1.tete.x+=unit;
 	   j1.corps.x+=unit;
        modifPos(position, 0, unit);
-				 // dÃ©placement ICONE
+				 // déplacement ICONE
       }
 	 else{
 		j1.tete.x-=unit*7;
@@ -957,7 +918,6 @@ async function move(k) {
 	}
 	
 }
-
 async function partie(){
 	while(niveau<11){
 		if(ennemiPasse==maxennemi){
@@ -973,10 +933,9 @@ async function partie(){
 		await sleep(10000);
 	}
 	
-	alert("felicitation vous avez gagnÃ©")
+	alert("felicitation vous avez gagné")
 	return null;
 }
-
 async function deroulementNiveau(){
 	var reserve = new Array(maxennemi);
 	while(ennemiPasse<=maxennemi){
@@ -994,7 +953,7 @@ async function deroulementNiveau(){
 						}
 						else{
 							bloc.removeChild(position);
-							alert("tuÃ© par un poisson panÃ©, vous n'avez pas honte?!");
+							alert("tué par un poisson pané, vous n'avez pas honte?!");
 							return null;
 						}
 					}
@@ -1010,10 +969,4 @@ async function deroulementNiveau(){
 			await sleep(1);
 		}
 	}
-}
-*/
-
-
-  
-  
-
+}*/
