@@ -42,7 +42,7 @@ function randomGame(){
 
   tab[13]="!((!a|!b)-!(a&b))";
 
-  tab[14]="!(((a|b|!c)&(&|b|c)&(a|!b))-a)";
+  tab[14]="!(((a|b|!c)&(a|b|c)&(a|!b))-a)";
 
   tab[15]="!((u&(w-v)&(t-v)&(u-(w|t)))-v)";
 
@@ -50,7 +50,7 @@ function randomGame(){
 
   tab[17]="!((p|(q-!p))|((p&(p-q)&((p-q)-r))-(p&q&r)))";
 
-  tab[18]="!(((p-(q-r))-((q-r)|(q-r)))-((!(!q-!p))|!q|q))";
+  tab[18]="!(((p-(q-r))-((q-r)|(q-r)))-(!(!q-!p)|!q|q))";
 
   tab[19]="!(((((s&p)-(q&r))&(!r|!q)&p)&(t&(s-!t)))-!s)";
 
@@ -62,136 +62,7 @@ function randomGame(){
 
 }
 
-/*function game(id, idDiv){
-	nbEtape++;
-	var formule = id.innerHTML;
-	var ParcourTableau = 0;
-	var symbole;
-	var affichage='<button onclick="game(this,'+"d"+nbEtape+"1"+')" id="f'+nbEtape+"1"+'" type="button">';
-	for (var i; i<formule.length; i++){
-		symbole=formule.charAT(i);
-		
-		if (symbole=="("){
-			if (i>0){
-				
-			}
-			var b = new bloc();
-			b.debut= i+1;
-			var cpt =1;
-			while (cpt>0){
-				i++;
-				if(formule.charAt(i)==")"){cpt--;}
-				if(formule.charAt(i)=="("){cpt++;}				
-			}
-			b.fin=i-1;
-			for (var j=b.debut; j<i;j++){
-				affichage= affichage+formule.charAt(j);
-			}
-			
-			
-		}
-		
-		if (symbole== "-"){
-			nbEtape++;
-			affichage = "!("+affichage+')</button>			<button onclick="game(this,'+"d"+nbEtape+"2"+')" id="f'+nbEtape+"2"+'" type="button">';
-			i++
-			while(i<formule.length){
-				affichage=affichage+formule.charAt(i);
-				i++;
-			}
-			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'"><\div> 		<div id="d'+nbEtape+"2"+'"><\div>';
-			
-		}
-		if(symbole== "&"){
-			affichage=affichage+'</button><br><button onclick="game(this,'+"d"+nbEtape+"1"+')" id="f'+nbEtape+"2"+'" type="button">';
-			while(i<formule.length){
-				affichage=affichage+formule.charAt(i);
-				i++;
-			}
-			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'"><\div>';
-		}
-		
-		if(symbole== "|"){
-			affichage=affichage+'</button>		<button onclick="game(this,'+"d"+nbEtape+"2"+')" id="f'+nbEtape+"2"+'" type="button">';
-			i++;
-			while(i<formule.length){
-				affichage=affichage+formule.charAt(i);
-				i++;
-			}
-			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'"><\div> 		<div id="d'+nbEtape+"2"+'"><\div>';
-		}
-		if (symbole == "!"){
-			if (formule.charAt(i+1)=="("){
-				j=i+1;
-				var cpt =1;
-				while (cpt>0){
-					j++;
-					if(formule.charAt(j)==")"){cpt--;}
-					if(formule.charAt(j)=="("){cpt++;}				
-				}
-				if(j<formule.length-1){
-					while(i<formule.length){
-					affichage=affichage+formule.charAt(i);
-					i++;
-					}
-					
-				}
-				else{
-					
-					while(i<formule.length){
-						i++
-						if (formule.charAt(i)=="("){
-							j=i+1;
-							cpt=1;
-							while(cpt>0){
-								j++;
-								if(formule.charAt(j)==")"){cpt--;}
-								if(formule.charAt(j)=="("){cpt++;}
-							}
-							if(formule.charAt(j)!="-"){
-								affichage=affichage+'!(';
-							}
-							while(cpt>0){
-								i++;
-								affichage=affichage+formule.charAt(i);
-								if(formule.charAt(i)==")"){cpt--;}
-								if(formule.charAt(i)=="("){cpt++;}
-							}
-						}
-						if (formule.charAt(i)=="&"){
-							affichage=affichage+'|';
-						}
-						if (formule.charAt(i)=="|"){
-							affichage=affichage+'&';
-						}
-						if (formule.charAt(i)=="-"){
-							affichage=affichage+'&';
-						}
-						else{affichage=affichage+"!"+charAt(i);}
-					}
-					affichage=affichage+'</button><br><br><div id="d'+nbEtape+"2"+'"><\div>';
-				}
-				
-			}
-			
-			if (formule.charAt(i+1)=="!"){
-				i+=2;
-			}
-			
-			else{
-				affichage=affichage+'!';
-			}
-		}
-		else{
-			affichage=affichage+formule.charAt(i);
-		}
-		
-	}
-	
-	
-	document.getElementById(idDiv).innerHTML = affichage;
-	
-}*/
+
 
 function verouillage(id){
 	var parcoursID="";
@@ -218,16 +89,17 @@ function game2(id,idDiv){
 	nbEtape++;
 	console.log(id); 
 	console.log(idDiv);
-	id.style.backgroundColor="grey";
 	
+	id.style.backgroundColor="grey";
 	verouillage(id.id);
 	var ftemp = id.innerHTML;
 	var formule = "";
 	
-	for (var i=0; i<ftemp.length; i++){
-		formule=formule + ftemp.charAt(i);
-		if ( ftemp.charAt(i)=='&'){i=i+4;
-		}
+	console.log(ftemp);
+	
+	for (var i = 0; i<ftemp.length; i++){
+		formule = formule + ftemp.charAt(i);
+		if ( ftemp.charAt(i)=="&"){i=i+4};
 	}
 	
 	var ParcourTableau = 0;
@@ -241,6 +113,8 @@ function game2(id,idDiv){
 	document.getElementById("main").appendChild(nouvelleDiv);
 	
 	nouvelleDiv.style.height="22px";
+	
+	console.log(formule);
 	
 	for (var i = 0; i<formule.length; i++){
 		symbole = formule.charAt(i);
@@ -313,6 +187,7 @@ function game2(id,idDiv){
 				f1=parenthese(f1);
 				f2=parenthese(f2);
 				implique(f1,f2,nbEtape);
+				recopie(id.id,nbEtape);
 				return;
 				//impliqueAtomique(f1,f2,nbEtape);
 			}
@@ -331,10 +206,9 @@ function game2(id,idDiv){
 			
 			nbEtape++;
 
-			i=i+6;
+			i++;
 
 			while(i<formule.length){
-				console.log(" & : " +f2);
 				f2=f2+formule.charAt(i);
 				console.log(f2);
 				i++;
@@ -368,6 +242,7 @@ function game2(id,idDiv){
 			f1=parenthese(f1);
 			f2=parenthese(f2);
 			disjonction(f1,f2,nbEtape);
+			recopie(id.id,nbEtape);
 			return;
 
 
@@ -419,75 +294,57 @@ function game2(id,idDiv){
 							i++;
 						}
 						console.log(f1);
-						console.log(i);
-						console.log(formule.charAt(i));
 						if (formule.charAt(i)=="&"){
-							if (formule.charAt(j)=="!" && formule.charAt(j+1)=="("){j=j+2;}
-							else {
-								if (formule.charAt(j)=="!"){j++;}
-								else{f2="!";}	
-							}
+							j=i+1;
 							while(j<formule.length-1){
 								f2=f2+formule.charAt(j);
-								if(formule.charAt(j)=="&"){j=j+4;}
 								j++;
-								
 							}
-							//if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
-							f1="!"+f1;
-							console.log(f1);
-							f1=parenthese(f1);
 							f2=parenthese(f2);
+							f2="!("+f2+")";
+							if(f1.charAt(0)!="!"){f1="!"+f1;}
+							else{f1=f1.substring(1);}
+							if (f2.length==5){f2=f2.charAt(3);}
+							if (f2.length==4){f2="!"+f2.charAt(2);}
 							disjonction(f1,f2,nbEtape);
+							recopie(id.id,nbEtape);
 							return;
 						}
 						if (formule.charAt(i)=="|"){
 							j=i+1;
-							if (formule.charAt(j)=="!" && formule.charAt(j+1)=="("){j=j+2;}
-							else {
-								if (formule.charAt(j)=="!"){j++;}
-								else{f2="!";}	
-							}
 							while(j<formule.length-1){
 								f2=f2+formule.charAt(j);
-								if(formule.charAt(j)=="&"){j=j+4;}
 								j++;
-								
 							}
-							//if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
-							f1="!"+f1;
-							console.log(f1);
-							f1=parenthese(f1);
 							f2=parenthese(f2);
+							f2="!("+f2+")";
+							if(f1.charAt(0)!="!"){f1="!"+f1;}
+							else{f1=f1.substring(1);}
+							if (f2.length==5){f2=f2.charAt(3);}
+							if (f2.length==4){f2="!"+f2.charAt(2);}
 							conjonction(f1,f2,nbEtape);
 							recopie(id.id,nbEtape);
 							return;
 						}
 						if (formule.charAt(i)=="-"){
 							j=i+1;
-							if (formule.charAt(j)=="!" && formule.charAt(j+1)=="("){j=j+2;}
-							else {
-								if (formule.charAt(j)=="!"){j++;}
-								else{f2="!";}	
-							}
 							while(j<formule.length-1){
 								f2=f2+formule.charAt(j);
-								if(formule.charAt(j)=="&"){j=j+4;}
 								j++;
-								
 							}
-							//if(formule.charAt(j)!=")" || formule.charAt(i+4)!="!"){f2=f2+formule.charAt(j);}
-							console.log(f1);
-							f1=parenthese(f1);
 							f2=parenthese(f2);
+							f2="!("+f2+")";
+							if (f2.length==5){f2=f2.charAt(3);}
+							if (f2.length==4){f2="!"+f2.charAt(2);}
+							f1=parenthese(f1);
 							conjonction(f1,f2,nbEtape);
 							recopie(id.id,nbEtape);
 							return;
 						}
-						if( formule.charAt(i)=="!"){
+						/*if( formule.charAt(i)=="!"){
 							f1=f1+formule.charAt(i+1);
 							i++;
-						}
+						}*/
 						else{f1=f1+formule.charAt(i);}
 						i++;
 					}
@@ -529,7 +386,6 @@ function game2(id,idDiv){
 	//nouveauContenu.onclick= game(document.getElementById("f"+nbEtape+"1"),"'" +"d"+nbEtape+"1"+"'");
 */
 }
-
 function recopie(id,nbEtape){
 	var parcoursID="";
 	var j=0;
@@ -700,12 +556,11 @@ function parenthese(formule){
 	else{ return formule;}
 	
 }
-
 	/*function verif(id){
-	 //id bouton vérif == nombre de bouton(nb sous formules) + num
-	ex: 1. avb / !b  id button vérif = v21
-	2. a / !b  id button vérif = v22
-	3. b / !b id button vérif = v23
+	 //id bouton vÃ©rif == nombre de bouton(nb sous formules) + num
+	ex: 1. avb / !b  id button vÃ©rif = v21
+	2. a / !b  id button vÃ©rif = v22
+	3. b / !b id button vÃ©rif = v23
 	*/
 
 	/*var tab= new Array();
@@ -729,8 +584,136 @@ return verif;
 		
 
 		
-
+/*function game(id, idDiv){
+	nbEtape++;
+	var formule = id.innerHTML;
+	var ParcourTableau = 0;
+	var symbole;
+	var affichage='<button onclick="game(this,'+"d"+nbEtape+"1"+')" id="f'+nbEtape+"1"+'" type="button">';
+	for (var i; i<formule.length; i++){
+		symbole=formule.charAT(i);
 		
+		if (symbole=="("){
+			if (i>0){
+				
+			}
+			var b = new bloc();
+			b.debut= i+1;
+			var cpt =1;
+			while (cpt>0){
+				i++;
+				if(formule.charAt(i)==")"){cpt--;}
+				if(formule.charAt(i)=="("){cpt++;}				
+			}
+			b.fin=i-1;
+			for (var j=b.debut; j<i;j++){
+				affichage= affichage+formule.charAt(j);
+			}
+			
+			
+		}
+		
+		if (symbole== "-"){
+			nbEtape++;
+			affichage = "!("+affichage+')</button>			<button onclick="game(this,'+"d"+nbEtape+"2"+')" id="f'+nbEtape+"2"+'" type="button">';
+			i++
+			while(i<formule.length){
+				affichage=affichage+formule.charAt(i);
+				i++;
+			}
+			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'"><\div> 		<div id="d'+nbEtape+"2"+'"><\div>';
+			
+		}
+		if(symbole== "&"){
+			affichage=affichage+'</button><br><button onclick="game(this,'+"d"+nbEtape+"1"+')" id="f'+nbEtape+"2"+'" type="button">';
+			while(i<formule.length){
+				affichage=affichage+formule.charAt(i);
+				i++;
+			}
+			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'"><\div>';
+		}
+		
+		if(symbole== "|"){
+			affichage=affichage+'</button>		<button onclick="game(this,'+"d"+nbEtape+"2"+')" id="f'+nbEtape+"2"+'" type="button">';
+			i++;
+			while(i<formule.length){
+				affichage=affichage+formule.charAt(i);
+				i++;
+			}
+			affichage=affichage+'</button><br><br><div id="d'+nbEtape+"1"+'"><\div> 		<div id="d'+nbEtape+"2"+'"><\div>';
+		}
+		if (symbole == "!"){
+			if (formule.charAt(i+1)=="("){
+				j=i+1;
+				var cpt =1;
+				while (cpt>0){
+					j++;
+					if(formule.charAt(j)==")"){cpt--;}
+					if(formule.charAt(j)=="("){cpt++;}				
+				}
+				if(j<formule.length-1){
+					while(i<formule.length){
+					affichage=affichage+formule.charAt(i);
+					i++;
+					}
+					
+				}
+				else{
+					
+					while(i<formule.length){
+						i++
+						if (formule.charAt(i)=="("){
+							j=i+1;
+							cpt=1;
+							while(cpt>0){
+								j++;
+								if(formule.charAt(j)==")"){cpt--;}
+								if(formule.charAt(j)=="("){cpt++;}
+							}
+							if(formule.charAt(j)!="-"){
+								affichage=affichage+'!(';
+							}
+							while(cpt>0){
+								i++;
+								affichage=affichage+formule.charAt(i);
+								if(formule.charAt(i)==")"){cpt--;}
+								if(formule.charAt(i)=="("){cpt++;}
+							}
+						}
+						if (formule.charAt(i)=="&"){
+							affichage=affichage+'|';
+						}
+						if (formule.charAt(i)=="|"){
+							affichage=affichage+'&';
+						}
+						if (formule.charAt(i)=="-"){
+							affichage=affichage+'&';
+						}
+						else{affichage=affichage+"!"+charAt(i);}
+					}
+					affichage=affichage+'</button><br><br><div id="d'+nbEtape+"2"+'"><\div>';
+				}
+				
+			}
+			
+			if (formule.charAt(i+1)=="!"){
+				i+=2;
+			}
+			
+			else{
+				affichage=affichage+'!';
+			}
+		}
+		else{
+			affichage=affichage+formule.charAt(i);
+		}
+		
+	}
+	
+	
+	document.getElementById(idDiv).innerHTML = affichage;
+	
+}*/		
 
 		
 
@@ -744,11 +727,11 @@ return verif;
 
 
 
-//le code de mon jeux, je le garde en guise de pense bete pour quelques syntaxe (et petit memo au debut)
-/*memo: negation ¬ alt+0172
-	 et ^ 
-	 ou ?
-	 implique ?
+/* le code de mon jeux, je le garde en guise de pense bete pour quelques syntaxe (et petit memo au debut)
+memo: negation Â¬ alt+0172
+	 et Ë„ 
+	 ou Ë…
+	 implique â†’
 	 
 var myString = 'Pauline';
 var first = myString.charAt(0); // P
@@ -774,7 +757,7 @@ function ennemi(){
 	this.idf=genereID();
 	this.b=new boite();
 	this.i=document.getElementById(this.idf);
-}//id ennemi, unique , incrementer id, reinitialiser remove child à partir du moment ou il atteind un des bords
+}//id ennemi, unique , incrementer id, reinitialiser remove child Ã  partir du moment ou il atteind un des bords
 function init(){
 	s = document.getElementById('surface');
 	bloc = document.getElementById('bloc');
@@ -850,9 +833,9 @@ function modifPos(obj, t, l) {
       }
 	  
 function collision(box1, box2){
-	//déjà fait modifier..
-	 if((box2.x >= box1.x + box1.w)      // trop à droite
-	|| (box2.x + box2.w <= box1.x) // trop à gauche
+	//dÃ©jÃ  fait modifier..
+	 if((box2.x >= box1.x + box1.w)      // trop Ã  droite
+	|| (box2.x + box2.w <= box1.x) // trop Ã  gauche
 	|| (box2.y >= box1.y + box1.h) // trop en bas
 	|| (box2.y + box2.h <= box1.y))  // trop en haut
           return false; 
@@ -863,7 +846,7 @@ function collision(box1, box2){
 async function move(k) {
     var key = k.keyCode ? k.keyCode : k.which;
    
-    //unité de déplacement en fonction de la taille de l'image
+    //unitÃ© de dÃ©placement en fonction de la taille de l'image
     position = document.getElementById('joueur');
     for(var i=0; i<12; i++){
 		if (key == 40) {//bas
@@ -907,7 +890,7 @@ async function move(k) {
        j1.tete.x+=unit;
 	   j1.corps.x+=unit;
        modifPos(position, 0, unit);
-				 // déplacement ICONE
+				 // dÃ©placement ICONE
       }
 	 else{
 		j1.tete.x-=unit*7;
@@ -933,7 +916,7 @@ async function partie(){
 		await sleep(10000);
 	}
 	
-	alert("felicitation vous avez gagné")
+	alert("felicitation vous avez gagnÃ©")
 	return null;
 }
 async function deroulementNiveau(){
@@ -953,7 +936,7 @@ async function deroulementNiveau(){
 						}
 						else{
 							bloc.removeChild(position);
-							alert("tué par un poisson pané, vous n'avez pas honte?!");
+							alert("tuÃ© par un poisson panÃ©, vous n'avez pas honte?!");
 							return null;
 						}
 					}
@@ -969,4 +952,9 @@ async function deroulementNiveau(){
 			await sleep(1);
 		}
 	}
-}*/
+}
+*/
+
+
+  
+  
