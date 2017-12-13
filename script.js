@@ -276,8 +276,8 @@ function game2(id,idDiv){
 	
 	for (var i=0; i<formule.length; i++){
 		formule=formule+ ftemp.chartAt(i);
-		if ( ftemp.chartAt(i)==&){i=i+4);
-		}
+		if ( ftemp.chartAt(i)=="&"){i=i+4};
+		console.log(formule);
 	}
 	
 	var ParcourTableau = 0;
