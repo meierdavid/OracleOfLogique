@@ -274,9 +274,9 @@ function game2(id,idDiv){
 	var ftemp = id.innerHTML;
 	var formule = "";
 	
-	for (var i=0; i<formule.length; i++){
-		formule=formule+ ftemp.chartAt(i);
-		if ( ftemp.chartAt(i)=="&"){i=i+4};
+	for (var i = 0; i<ftemp.length; i++){
+		formule = formule + ftemp.charAt(i);
+		if ( ftemp.charAt(i)=="&"){i=i+4};
 		console.log(formule);
 	}
 	
