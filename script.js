@@ -81,7 +81,9 @@ function verouillage(id){
 		console.log("numid" +"f"+test);
 		console.log("numid" +document.getElementById("f"+test));
 		bout=document.getElementById("f"+test);
-		bout.removeAttribute("onclick");
+		if (bout.innerHTML.length>2){
+			bout.removeAttribute("onclick");
+		}
 		j++;
 		test=eval(parcoursID)+j;
 	}
