@@ -1,0 +1,14 @@
+body{
+	background: url(image/fondSoutenance.gif) no-repeat center fixed;
+	background-size: cover;
+}
+main{
+  float:left;
+  margin-left: 500px;
+  
+}
+div{
+	display : table-cell;
+	text-align: center;
+	position : static;
+}
