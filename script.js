@@ -363,7 +363,6 @@ function game2(id,idDiv){
 			
 		}
 
-
 		
 
 		affichage=affichage+formule.charAt(i);
