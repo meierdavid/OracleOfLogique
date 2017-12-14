@@ -159,7 +159,11 @@ function game2(id,idDiv){
 			var f1 = affichage;
 			var f2="";
 			nbEtape++;		
-
+			/*if(formule.length==3){
+				f1=formule.charAt(0);
+				f2=formule.charAt(2);
+				impliqueAtomique(f1,f2,nbEtape)
+			}*/
 			
 			
 			i++;
@@ -171,22 +175,27 @@ function game2(id,idDiv){
 				
 
 			}
-			if (f1.charAt(0)=="!"){
-				f1=parenthese(f1.substring(1));
+			if(f2.charAt(0)=="("){
+				console.log("f2 "+f2);
+				console.log("f1 " +f1);
+			f1=parenthese(f1);
+			f2=parenthese(f2);
+			implique(f1,f2,nbEtape);
+			recopie2(id.id,nbEtape);
+			return;
 			}
 			else{
 				f1=parenthese(f1);
-				f1="!("+f1+")";
-				if (f1.length==5){f1=f1.charAt(3);}
-				if (f1.length==4){f1="!"+f1.charAt(2);}
+				f2=parenthese(f2);
+				implique(f1,f2,nbEtape);
+				recopie2(id.id,nbEtape);
+				return;
+				//impliqueAtomique(f1,f2,nbEtape);
 			}
-			f1=parenthese(f1);
-			f2=parenthese(f2);
-			disjonction(f1,f2,nbEtape);
-			recopie(id.id,nbEtape);
-			return;
-		}
+			
+			
 
+		}
 
 
 
@@ -299,7 +308,7 @@ function game2(id,idDiv){
 							if (f2.length==5){f2=f2.charAt(3);}
 							if (f2.length==4){f2="!"+f2.charAt(2);}
 							disjonction(f1,f2,nbEtape);
-							recopie(id.id,nbEtape);
+							recopie2(id.id,nbEtape);
 							return;
 						}
 						if (formule.charAt(i)=="|"){
@@ -324,36 +333,19 @@ function game2(id,idDiv){
 								f2=f2+formule.charAt(j);
 								j++;
 							}
-							if (f2.charAt(0)=="!" && f2.charAt(1)=="("){
-								var t=1;
-								var cpt =1;
-
-								while (cpt>0){
-
-									t++;
-
-									if(f2.charAt(t)==")"){cpt--;}
-
-									if(f2.charAt(t)=="("){cpt++;}				
-
-								}
-								if(t>=f2.length-1){
-									f2=parenthese(f2.substring(1));
-								}
-							}
-							else{
-								f2=parenthese(f2);
-								f2="!("+f2+")";
-								if (f2.length==5){f2=f2.charAt(3);}
-								if (f2.length==4){f2="!"+f2.charAt(2);}
-							}
-							
+							f2=parenthese(f2);
+							f2="!("+f2+")";
+							if (f2.length==5){f2=f2.charAt(3);}
+							if (f2.length==4){f2="!"+f2.charAt(2);}
 							f1=parenthese(f1);
 							conjonction(f1,f2,nbEtape);
 							recopie(id.id,nbEtape);
 							return;
 						}
-
+						/*if( formule.charAt(i)=="!"){
+							f1=f1+formule.charAt(i+1);
+							i++;
+						}*/
 						else{f1=f1+formule.charAt(i);}
 						i++;
 					}
@@ -361,6 +353,13 @@ function game2(id,idDiv){
 				
 			}
 			
+			else{
+				if (formule.charAt(i+1)=="!"){
+					i++;
+				}
+				
+			
+			}
 		}
 
 
@@ -390,7 +389,7 @@ function game2(id,idDiv){
 }
 function recopie(id,nbEtape){
 	var parcoursID="";
-	var j=0;
+	var j=1;
 	var bout;
 	for(var i=1;i<id.length-1;i++){
 		parcoursID=parcoursID+id.charAt(i);
@@ -399,10 +398,10 @@ function recopie(id,nbEtape){
 	var compt=3;
 	test=parcoursID+1;
 	console.log("test"+test);
-	
-	while(document.getElementById("f"+test)!=null){
+	console.log("lalalalal" + document.getElementById("f"+13));
+	while(document.getElementById("f"+test)!= null){
 		if("f"+test!=id){
-			
+			console.log("création"+test)
 			const nouveauContenu = document.createElement("button");
 			const nouvelleDiv = document.createElement("div");
 			nouveauContenu.innerHTML=document.getElementById("f"+test).innerHTML;
@@ -410,13 +409,14 @@ function recopie(id,nbEtape){
 			document.getElementById("main").appendChild(nouvelleDiv);
 			nouvelleDiv.style.textAlign='center';
 			nouvelleDiv.id="d"+nbEtape+compt;
+			console.log("T-T while"+test)
 			nouveauContenu.id="f"+nbEtape+compt;
 			nouveauContenu.setAttribute("onclick","game2("+"f"+nbEtape+compt+","+"d"+nbEtape+compt+")");
 			compt++;
 		}
 		j++;
 		test=parcoursID+j;
-		console.log("T-T"+test)
+		console.log("T-T while"+test)
 	}
 	
 }
@@ -486,7 +486,7 @@ function implique(f1,f2,nbEtape){
 	nouveauContenu.innerHTML="!"+f1;
 	nouveauContenu2.innerHTML=f2;
 	nouveauContenu.id="f"+nbet+"1";
-	nouveauContenu2.id="f"+nbEtape+"2";
+	nouveauContenu2.id="f"+nbEtape+"1";
 	nouveauContenu.setAttribute("onclick","game2("+"f"+nbet+"1"+","+"d"+nbet+"1"+")");
 	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"1"+","+"d"+nbEtape+"1"+")");
 	}
@@ -606,10 +606,10 @@ function parenthese(formule){
 	
 }
 	/*function verif(id){
-	 //id bouton vÃ©rif == nombre de bouton(nb sous formules) + num
-	ex: 1. avb / !b  id button vÃ©rif = v21
-	2. a / !b  id button vÃ©rif = v22
-	3. b / !b id button vÃ©rif = v23
+	 //id bouton vérif == nombre de bouton(nb sous formules) + num
+	ex: 1. avb / !b  id button vérif = v21
+	2. a / !b  id button vérif = v22
+	3. b / !b id button vérif = v23
 	*/
 
 	/*var tab= new Array();
@@ -777,7 +777,7 @@ return verif;
 
 
 /* le code de mon jeux, je le garde en guise de pense bete pour quelques syntaxe (et petit memo au debut)
-memo: negation Â¬ alt+0172
+memo: negation ¬ alt+0172
 	 et ^ 
 	 ou ?
 	 implique ?
@@ -806,7 +806,7 @@ function ennemi(){
 	this.idf=genereID();
 	this.b=new boite();
 	this.i=document.getElementById(this.idf);
-}//id ennemi, unique , incrementer id, reinitialiser remove child Ã  partir du moment ou il atteind un des bords
+}//id ennemi, unique , incrementer id, reinitialiser remove child à partir du moment ou il atteind un des bords
 function init(){
 	s = document.getElementById('surface');
 	bloc = document.getElementById('bloc');
@@ -882,9 +882,9 @@ function modifPos(obj, t, l) {
       }
 	  
 function collision(box1, box2){
-	//dÃ©jÃ  fait modifier..
-	 if((box2.x >= box1.x + box1.w)      // trop Ã  droite
-	|| (box2.x + box2.w <= box1.x) // trop Ã  gauche
+	//déjà fait modifier..
+	 if((box2.x >= box1.x + box1.w)      // trop à droite
+	|| (box2.x + box2.w <= box1.x) // trop à gauche
 	|| (box2.y >= box1.y + box1.h) // trop en bas
 	|| (box2.y + box2.h <= box1.y))  // trop en haut
           return false; 
@@ -895,7 +895,7 @@ function collision(box1, box2){
 async function move(k) {
     var key = k.keyCode ? k.keyCode : k.which;
    
-    //unitÃ© de dÃ©placement en fonction de la taille de l'image
+    //unité de déplacement en fonction de la taille de l'image
     position = document.getElementById('joueur');
     for(var i=0; i<12; i++){
 		if (key == 40) {//bas
@@ -939,7 +939,7 @@ async function move(k) {
        j1.tete.x+=unit;
 	   j1.corps.x+=unit;
        modifPos(position, 0, unit);
-				 // dÃ©placement ICONE
+				 // déplacement ICONE
       }
 	 else{
 		j1.tete.x-=unit*7;
@@ -965,7 +965,7 @@ async function partie(){
 		await sleep(10000);
 	}
 	
-	alert("felicitation vous avez gagnÃ©")
+	alert("felicitation vous avez gagné")
 	return null;
 }
 async function deroulementNiveau(){
@@ -985,7 +985,7 @@ async function deroulementNiveau(){
 						}
 						else{
 							bloc.removeChild(position);
-							alert("tuÃ© par un poisson panÃ©, vous n'avez pas honte?!");
+							alert("tué par un poisson pané, vous n'avez pas honte?!");
 							return null;
 						}
 					}
