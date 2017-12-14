@@ -401,7 +401,7 @@ function recopie(id,nbEtape){
 	console.log("lalalalal" + document.getElementById("f"+13));
 	while(document.getElementById("f"+test)!= null){
 		if("f"+test!=id){
-			console.log("création"+test)
+			console.log("crÃ©ation"+test)
 			const nouveauContenu = document.createElement("button");
 			const nouvelleDiv = document.createElement("div");
 			nouveauContenu.innerHTML=document.getElementById("f"+test).innerHTML;
@@ -422,7 +422,7 @@ function recopie(id,nbEtape){
 }
 function recopie2(id,nbEtape){
 	var parcoursID="";
-	var j=0;
+	var j=1;
 	var bout;
 	for(var i=1;i<id.length-1;i++){
 		parcoursID=parcoursID+id.charAt(i);
@@ -606,10 +606,10 @@ function parenthese(formule){
 	
 }
 	/*function verif(id){
-	 //id bouton vérif == nombre de bouton(nb sous formules) + num
-	ex: 1. avb / !b  id button vérif = v21
-	2. a / !b  id button vérif = v22
-	3. b / !b id button vérif = v23
+	 //id bouton vÃ©rif == nombre de bouton(nb sous formules) + num
+	ex: 1. avb / !b  id button vÃ©rif = v21
+	2. a / !b  id button vÃ©rif = v22
+	3. b / !b id button vÃ©rif = v23
 	*/
 
 	/*var tab= new Array();
@@ -777,7 +777,7 @@ return verif;
 
 
 /* le code de mon jeux, je le garde en guise de pense bete pour quelques syntaxe (et petit memo au debut)
-memo: negation ¬ alt+0172
+memo: negation Â¬ alt+0172
 	 et ^ 
 	 ou ?
 	 implique ?
@@ -806,7 +806,7 @@ function ennemi(){
 	this.idf=genereID();
 	this.b=new boite();
 	this.i=document.getElementById(this.idf);
-}//id ennemi, unique , incrementer id, reinitialiser remove child à partir du moment ou il atteind un des bords
+}//id ennemi, unique , incrementer id, reinitialiser remove child Ã  partir du moment ou il atteind un des bords
 function init(){
 	s = document.getElementById('surface');
 	bloc = document.getElementById('bloc');
@@ -882,9 +882,9 @@ function modifPos(obj, t, l) {
       }
 	  
 function collision(box1, box2){
-	//déjà fait modifier..
-	 if((box2.x >= box1.x + box1.w)      // trop à droite
-	|| (box2.x + box2.w <= box1.x) // trop à gauche
+	//dÃ©jÃ  fait modifier..
+	 if((box2.x >= box1.x + box1.w)      // trop Ã  droite
+	|| (box2.x + box2.w <= box1.x) // trop Ã  gauche
 	|| (box2.y >= box1.y + box1.h) // trop en bas
 	|| (box2.y + box2.h <= box1.y))  // trop en haut
           return false; 
@@ -895,7 +895,7 @@ function collision(box1, box2){
 async function move(k) {
     var key = k.keyCode ? k.keyCode : k.which;
    
-    //unité de déplacement en fonction de la taille de l'image
+    //unitÃ© de dÃ©placement en fonction de la taille de l'image
     position = document.getElementById('joueur');
     for(var i=0; i<12; i++){
 		if (key == 40) {//bas
@@ -939,7 +939,7 @@ async function move(k) {
        j1.tete.x+=unit;
 	   j1.corps.x+=unit;
        modifPos(position, 0, unit);
-				 // déplacement ICONE
+				 // dÃ©placement ICONE
       }
 	 else{
 		j1.tete.x-=unit*7;
@@ -965,7 +965,7 @@ async function partie(){
 		await sleep(10000);
 	}
 	
-	alert("felicitation vous avez gagné")
+	alert("felicitation vous avez gagnÃ©")
 	return null;
 }
 async function deroulementNiveau(){
@@ -985,7 +985,7 @@ async function deroulementNiveau(){
 						}
 						else{
 							bloc.removeChild(position);
-							alert("tué par un poisson pané, vous n'avez pas honte?!");
+							alert("tuÃ© par un poisson panÃ©, vous n'avez pas honte?!");
 							return null;
 						}
 					}
