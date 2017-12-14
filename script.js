@@ -2,7 +2,7 @@ var score=0;
 
 var nbEtape=0;
 
-var contradiction1;
+var contradiction1=NULL;
 
 
 function bloc(){
@@ -406,7 +406,8 @@ function recopie(id,nbEtape, div){
 		//	document.getElementById("main").appendChild(nouvelleDiv);
 			console.log("T→T while"+test)
 			nouveauContenu.id="f"+nbEtape+compt;
-			nouveauContenu.setAttribute("onclick","game2(this)");
+			if(nouveauContenu.innerHTML.length<3){nouveauContenu.setAttribute("onclick","verif(this)");}
+			else { nouveauContenu.setAttribute("onclick","game2(this)");}
 			compt++;
 		}
 		j++;
@@ -535,8 +536,10 @@ function conjonction(f1,f2,nbEtape, pere){
 	nouveauContenu2.innerHTML=f2;
 	nouveauContenu.id="f"+nbEtape+"1";
 	nouveauContenu2.id="f"+nbEtape+"2";
-	nouveauContenu.setAttribute("onclick","game2(this)");
-	nouveauContenu2.setAttribute("onclick","game2(this)");
+	if(f1.length<3){ nouveauContenu.setAttribute("onclick","verif(this)");}
+	else { nouveauContenu.setAttribute("onclick","game2(this)");}
+	if(f2.length<3){nouveauContenu2.setAttribute("onclick","verif(this)");}
+	else { nouveauContenu2.setAttribute("onclick","game2(this)");}
 	}
 function disjonction(f1,f2,nbEtape, pere){
 	var nbet=nbEtape-1;
@@ -562,8 +565,10 @@ function disjonction(f1,f2,nbEtape, pere){
 	nouveauContenu2.innerHTML=f2;
 	nouveauContenu.id="f"+nbEtape+"1";
 	nouveauContenu2.id="f"+nbEtape+"2";
-	nouveauContenu.setAttribute("onclick","game2(this)");
-	nouveauContenu2.setAttribute("onclick","game2(this)");
+	if(f1.length<3){ nouveauContenu.setAttribute("onclick","verif(this)");}
+	else { nouveauContenu.setAttribute("onclick","game2(this)");}
+	if(f2.length<3){nouveauContenu2.setAttribute("onclick","verif(this)");}
+	else { nouveauContenu2.setAttribute("onclick","game2(this)");}
 	recopie(pere.id,nbEtape, nouvelleDiv);
 	recopie(pere.id,nbEtape, nouvelleDiv2);
 	
@@ -610,18 +615,43 @@ function parenthese(formule){
 function verif(id){
 	if(id.innerHTML.length<3){
 		if (contradiction1==NULL){
-			contradiction1=id.innerHTML;
+			contradiction1=id;
 		}
-		else { if (contradiction1.charAT(0)=="!") {
-				if (contradiction1.charAt(1)==id.innerHTML.charAt(0)) {
-					score=score+15;
+		else { 
+			if (contradiction1.parentNode == id.parentNode){
+				if (contradiction1.charAT(0)=="!") {
+					if (contradiction1.innerHTML.charAt(1)==id.innerHTML.charAt(0)) {
+						score=score+15;
+					}
+					else { score=score-5;
+						alert("mauvaise reponse, -5 points");
+					}
+				}
+				if (id.innerHTML.charAT(0)=="!") {
+					if (contradiction1.innerHTML.charAt(0)==id.innerHTML.charAt(1)) {
+						score=score+15;
+					}
+					else { score=score-5;
+						alert("mauvaise reponse, -5 points");
+					}
+				}
+				else { score=score-5;
+					alert("mauvaise reponse, -5 points");
 				}
 			}
+			else { alert("il faut que ce soit dans le meme groupe, sinon c'est trop simple!");}
+			contradiction1=NULL;
+			return;
 		}
 	
 	
+	}
+	else { alert("il faudrait decomposer un peut plus, sinon c'est de la triche!");
+		contradiction1=NULL;
+		return;
+	}
 }
-}
+
 
 	/*function verif(id){
 	 //id bouton vérif == nombre de bouton(nb sous formules) + num
