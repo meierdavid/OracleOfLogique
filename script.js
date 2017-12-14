@@ -2,6 +2,9 @@ var score=0;
 
 var nbEtape=0;
 
+var contradiction1;
+
+
 function bloc(){
 
 	this.debut=0;
@@ -14,45 +17,45 @@ function randomGame(){
 
   var tab = new Array();
 
-  tab[0]="!(p-((p-q)-q))";
+  tab[0]="!(p→((p→q)→q))";
 
-  tab[1]="!(p-(!q-!(p-q)))";
+  tab[1]="!(p→(!q→!(p→q)))";
 
-  tab[2]="!((!p-!q)-(q-p))";
+  tab[2]="!((!p→!q)→(q→p))";
 
-  tab[3]="!((p&(p-q)&((p-q)-r))-(p&q&r))";
+  tab[3]="!((p˄(p→q)˄((p→q)→r))→(p˄q˄r))";
 
-  tab[4]="!((p-q)-((q-r)-(p-r)))";
+  tab[4]="!((p→q)→((q→r)→(p→r)))";
 
-  tab[5]="!((((s&p)-(q&r))&(!r|!q)&p)-!s)";
+  tab[5]="!((((s˄p)→(q˄r))˄(!r˅!q)˄p)→!s)";
 
-  tab[6]="!(((p-q)&((r&s)-p)&(t-r)&(s&t))-q)";
+  tab[6]="!(((p→q)˄((r˄s)→p)˄(t→r)˄(s˄t))→q)";
 
-  tab[7]="!((p-(q-r))-((p-q)-(p-r)))";
+  tab[7]="!((p→(q→r))→((p→q)→(p→r)))";
 
-  tab[8]="!((q-p)-((!q-p)-p))";
+  tab[8]="!((q→p)→((!q→p)→p))";
 
-  tab[9]="!(p-(q-r)-((p-r)|(q-r)))";
+  tab[9]="!(p→(q→r)→((p→r)˅(q→r)))";
 
-  tab[10]="!(((p-r)|(q-r))-(p-(q-r)))";
+  tab[10]="!(((p→r)˅(q→r))→(p→(q→r)))";
 
-  tab[11]="!(((p-q)&(q-p))|(p&!p)|(!p&q))";
+  tab[11]="!(((p→q)˄(q→p))˅(p˄!p)˅(!p˄q))";
 
-  tab[12]="!(!(a&b)-(!a|!b))";
+  tab[12]="!(!(a˄b)→(!a˅!b))";
 
-  tab[13]="!((!a|!b)-!(a&b))";
+  tab[13]="!((!a˅!b)→!(a˄b))";
 
-  tab[14]="!(((a|b|!c)&(a|b|c)&(a|!b))-a)";
+  tab[14]="!(((a˅b˅!c)˄(a˅b˅c)˄(a˅!b))→a)";
 
-  tab[15]="!((u&(w-v)&(t-v)&(u-(w|t)))-v)";
+  tab[15]="!((u˄(w→v)˄(t→v)˄(u→(w˅t)))→v)";
 
-  tab[16]="!(r|((p&(p-q)&((p-q)&r))-(p&q&r))&(t-!r))";
+  tab[16]="!(r˅((p˄(p→q)˄((p→q)˄r))→(p˄q˄r))˄(t→!r))";
 
-  tab[17]="!((p|(q-!p))|((p&(p-q)&((p-q)-r))-(p&q&r)))";
+  tab[17]="!((p˅(q→!p))˅((p˄(p→q)˄((p→q)→r))→(p˄q˄r)))";
 
-  tab[18]="!(((p-(q-r))-((q-r)|(q-r)))-(!(!q-!p)|!q|q))";
+  tab[18]="!(((p→(q→r))→((q→r)˅(q→r)))→(!(!q→!p)˅!q˅q))";
 
-  tab[19]="!(((((s&p)-(q&r))&(!r|!q)&p)&(t&(s-!t)))-!s)";
+  tab[19]="!(((((s˄p)→(q˄r))˄(!r˅!q)˄p)˄(t˄(s→!t)))→!s)";
 
   var x = Math.floor((Math.random() * 20) );
 
@@ -84,23 +87,16 @@ function verouillage(id){
 	}
 	
 }
-function game2(id,idDiv){
+function game2(id,){
 	
 	nbEtape++;
 	console.log(id); 
-	console.log(idDiv);
 	
 	id.style.backgroundColor="grey";
 	verouillage(id.id);
-	var ftemp = id.innerHTML;
-	var formule = "";
+	var formule = id.innerHTML;
 	
-	console.log(ftemp);
 	
-	for (var i = 0; i<ftemp.length; i++){
-		formule = formule + ftemp.charAt(i);
-		if ( ftemp.charAt(i)=="&"){i=i+4};
-	}
 	
 	var ParcourTableau = 0;
 
@@ -110,9 +106,9 @@ function game2(id,idDiv){
 	var affichage='';
 	const nouvelleDiv = document.createElement("div");
 	
-	document.getElementById("main").appendChild(nouvelleDiv);
+	//document.getElementById("main").appendChild(nouvelleDiv);
 	
-	nouvelleDiv.style.height="22px";
+	//nouvelleDiv.style.height="22px";
 	
 	console.log(formule);
 	
@@ -155,15 +151,11 @@ function game2(id,idDiv){
 		}
 	
 
-		if (symbole== "-"){
+		if (symbole== "→"){
 			var f1 = affichage;
 			var f2="";
 			nbEtape++;		
-			/*if(formule.length==3){
-				f1=formule.charAt(0);
-				f2=formule.charAt(2);
-				impliqueAtomique(f1,f2,nbEtape)
-			}*/
+
 			
 			
 			i++;
@@ -175,31 +167,26 @@ function game2(id,idDiv){
 				
 
 			}
-			if(f2.charAt(0)=="("){
-				console.log("f2 "+f2);
-				console.log("f1 " +f1);
-			f1=parenthese(f1);
-			f2=parenthese(f2);
-			implique(f1,f2,nbEtape);
-			recopie2(id.id,nbEtape);
-			return;
+			if (f1.charAt(0)=="!"){
+				f1=parenthese(f1.substring(1));
 			}
 			else{
 				f1=parenthese(f1);
-				f2=parenthese(f2);
-				implique(f1,f2,nbEtape);
-				recopie2(id.id,nbEtape);
-				return;
-				//impliqueAtomique(f1,f2,nbEtape);
+				f1="!("+f1+")";
+				if (f1.length==5){f1=f1.charAt(3);}
+				if (f1.length==4){f1="!"+f1.charAt(2);}
 			}
-			
-			
-
+			f1=parenthese(f1);
+			f2=parenthese(f2);
+			disjonction(f1,f2,nbEtape,id);
+			//recopie2(id.id,nbEtape);
+			return;
 		}
 
 
 
-		if(symbole== "&"){
+
+		if(symbole== "˄"){
 			
 			f1=affichage;
 			console.log(affichage);
@@ -217,14 +204,14 @@ function game2(id,idDiv){
 			}
 			f1=parenthese(f1);
 			f2=parenthese(f2);
-			conjonction(f1,f2,nbEtape);
-			recopie(id.id,nbEtape);
+			conjonction(f1,f2,nbEtape,id);
+			//recopie(id.id,nbEtape);
 			return;
 		}
 
 		
 
-		if(symbole== "|"){
+		if(symbole== "˅"){
 
 			var f1 = affichage;
 			var f2="";
@@ -242,8 +229,8 @@ function game2(id,idDiv){
 			}
 			f1=parenthese(f1);
 			f2=parenthese(f2);
-			disjonction(f1,f2,nbEtape);
-			recopie2(id.id,nbEtape);
+			disjonction(f1,f2,nbEtape,id);
+			//recopie2(id.id,nbEtape);
 			return;
 
 
@@ -295,7 +282,7 @@ function game2(id,idDiv){
 							i++;
 						}
 						console.log(f1);
-						if (formule.charAt(i)=="&"){
+						if (formule.charAt(i)=="˄"){
 							j=i+1;
 							while(j<formule.length-1){
 								f2=f2+formule.charAt(j);
@@ -307,11 +294,11 @@ function game2(id,idDiv){
 							else{f1=f1.substring(1);}
 							if (f2.length==5){f2=f2.charAt(3);}
 							if (f2.length==4){f2="!"+f2.charAt(2);}
-							disjonction(f1,f2,nbEtape);
-							recopie2(id.id,nbEtape);
+							disjonction(f1,f2,nbEtape,id);
+							//recopie2(id.id,nbEtape);
 							return;
 						}
-						if (formule.charAt(i)=="|"){
+						if (formule.charAt(i)=="˅"){
 							j=i+1;
 							while(j<formule.length-1){
 								f2=f2+formule.charAt(j);
@@ -323,29 +310,46 @@ function game2(id,idDiv){
 							else{f1=f1.substring(1);}
 							if (f2.length==5){f2=f2.charAt(3);}
 							if (f2.length==4){f2="!"+f2.charAt(2);}
-							conjonction(f1,f2,nbEtape);
-							recopie(id.id,nbEtape);
+							conjonction(f1,f2,nbEtape,id);
+							//recopie(id.id,nbEtape);
 							return;
 						}
-						if (formule.charAt(i)=="-"){
+						if (formule.charAt(i)=="→"){
 							j=i+1;
 							while(j<formule.length-1){
 								f2=f2+formule.charAt(j);
 								j++;
 							}
-							f2=parenthese(f2);
-							f2="!("+f2+")";
-							if (f2.length==5){f2=f2.charAt(3);}
-							if (f2.length==4){f2="!"+f2.charAt(2);}
+							if (f2.charAt(0)=="!" && f2.charAt(1)=="("){
+								var t=1;
+								var cpt =1;
+
+								while (cpt>0){
+
+									t++;
+
+									if(f2.charAt(t)==")"){cpt--;}
+
+									if(f2.charAt(t)=="("){cpt++;}				
+
+								}
+								if(t>=f2.length-1){
+									f2=parenthese(f2.substring(1));
+								}
+							}
+							else{
+								f2=parenthese(f2);
+								f2="!("+f2+")";
+								if (f2.length==5){f2=f2.charAt(3);}
+								if (f2.length==4){f2="!"+f2.charAt(2);}
+							}
+							
 							f1=parenthese(f1);
-							conjonction(f1,f2,nbEtape);
-							recopie(id.id,nbEtape);
+							conjonction(f1,f2,nbEtape,id);
+							//recopie(id.id,nbEtape);
 							return;
 						}
-						/*if( formule.charAt(i)=="!"){
-							f1=f1+formule.charAt(i+1);
-							i++;
-						}*/
+
 						else{f1=f1+formule.charAt(i);}
 						i++;
 					}
@@ -353,15 +357,7 @@ function game2(id,idDiv){
 				
 			}
 			
-			else{
-				if (formule.charAt(i+1)=="!"){
-					i++;
-				}
-				
-			
-			}
 		}
-
 
 		
 
@@ -387,7 +383,7 @@ function game2(id,idDiv){
 	//nouveauContenu.onclick= game(document.getElementById("f"+nbEtape+"1"),"'" +"d"+nbEtape+"1"+"'");
 */
 }
-function recopie(id,nbEtape){
+function recopie(id,nbEtape, div){
 	var parcoursID="";
 	var j=1;
 	var bout;
@@ -403,20 +399,19 @@ function recopie(id,nbEtape){
 		if("f"+test!=id){
 			console.log("création"+test)
 			const nouveauContenu = document.createElement("button");
-			const nouvelleDiv = document.createElement("div");
+			//const nouvelleDiv = document.createElement("div");
 			nouveauContenu.innerHTML=document.getElementById("f"+test).innerHTML;
-			nouvelleDiv.appendChild(nouveauContenu);
-			document.getElementById("main").appendChild(nouvelleDiv);
-			nouvelleDiv.style.textAlign='center';
-			nouvelleDiv.id="d"+nbEtape+compt;
-			console.log("T-T while"+test)
+			div.appendChild(document.createElement("br"));
+			div.appendChild(nouveauContenu);
+		//	document.getElementById("main").appendChild(nouvelleDiv);
+			console.log("T→T while"+test)
 			nouveauContenu.id="f"+nbEtape+compt;
-			nouveauContenu.setAttribute("onclick","game2("+"f"+nbEtape+compt+","+"d"+nbEtape+compt+")");
+			nouveauContenu.setAttribute("onclick","game2(this)");
 			compt++;
 		}
 		j++;
 		test=parcoursID+j;
-		console.log("T-T while"+test)
+		console.log("T→T while"+test)
 	}
 	
 }
@@ -434,7 +429,7 @@ function recopie2(id,nbEtape){
 	
 	while(document.getElementById("f"+test)!=null){
 		if("f"+test!=id){
-			console.log("T-T"+"d"+nbEtape+"1")
+			console.log("T→T"+"d"+nbEtape+"1")
 			const nouveauContenu = document.createElement("button");
 			const nouvelleDiv = document.createElement("div");
 			nouveauContenu.innerHTML=document.getElementById("f"+test).innerHTML;
@@ -458,11 +453,13 @@ function recopie2(id,nbEtape){
 		}
 		j++;
 		test=parcoursID+j;
-		console.log("T-T"+test)
+		console.log("T→T"+test)
 	}
+	var taille = (compt-1)*21
+	document.getElementById("d"+nbEtape+"1").style.top="-"+taille+"px";
 	
 }
-function implique(f1,f2,nbEtape){
+/*function implique(f1,f2,nbEtape){
 	var nbet=nbEtape-1;
 	console.log(f1);
 	console.log(f2);
@@ -504,8 +501,8 @@ function impliqueAtomique(f1,f2,nbEtape){
 	nouvelleDiv2.style.textAlign='center';
 	nouvelleDiv.style.position="relative";
 	nouvelleDiv2.style.position="relative";
-	nouvelleDiv.style.right="5px";
-	nouvelleDiv2.style.left="5px";
+	nouvelleDiv.style.right="30px";
+	nouvelleDiv2.style.left="30px";
 	nouvelleDiv.appendChild(nouveauContenu);
 	nouvelleDiv2.appendChild(nouveauContenu2);
 	nouvelleDiv.id="d"+nbet+"1";
@@ -517,30 +514,31 @@ function impliqueAtomique(f1,f2,nbEtape){
 	nouveauContenu.setAttribute("onclick","game2("+"f"+nbet+"1"+","+"d"+nbet+"1"+")");
 	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"1"+","+"d"+nbEtape+"1"+")");
 	
-}
-function conjonction(f1,f2,nbEtape){
+}*/
+function conjonction(f1,f2,nbEtape, pere){
 	console.log(f1);
 	console.log(f2);
 	const nouveauContenu = document.createElement("button");
 	const nouveauContenu2 = document.createElement("button");
 	const nouvelleDiv = document.createElement("div");
-	const nouvelleDiv2 = document.createElement("div");
-	document.getElementById("main").appendChild(nouvelleDiv);
-	document.getElementById("main").appendChild(nouvelleDiv2);
-	nouvelleDiv.style.textAlign='center';
-	nouvelleDiv2.style.textAlign='center';
+	//nouvelleDiv.style.textAlign='center';
+	//nouvelleDiv2.style.textAlign='center';
+	pere.parentNode.appendChild(nouvelleDiv);
 	nouvelleDiv.appendChild(nouveauContenu);
-	nouvelleDiv2.appendChild(nouveauContenu2);
+	nouvelleDiv.appendChild(document.createElement("br"));
+	nouvelleDiv.appendChild(nouveauContenu2);
+	nouvelleDiv.appendChild(document.createElement("br"));
+	nouvelleDiv.appendChild(document.createElement("br"));
+	recopie(pere.id,nbEtape, nouvelleDiv);
 	nouvelleDiv.id="d"+nbEtape+"1";
-	nouvelleDiv2.id="d"+nbEtape+"2";
 	nouveauContenu.innerHTML=f1;
 	nouveauContenu2.innerHTML=f2;
 	nouveauContenu.id="f"+nbEtape+"1";
 	nouveauContenu2.id="f"+nbEtape+"2";
-	nouveauContenu.setAttribute("onclick","game2("+"f"+nbEtape+"1"+","+"d"+nbEtape+"1"+")");
-	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"2"+","+"d"+nbEtape+"2"+")");
+	nouveauContenu.setAttribute("onclick","game2(this)");
+	nouveauContenu2.setAttribute("onclick","game2(this)");
 	}
-function disjonction(f1,f2,nbEtape){
+function disjonction(f1,f2,nbEtape, pere){
 	var nbet=nbEtape-1;
 	console.log(f1);
 	console.log(f2);
@@ -548,24 +546,26 @@ function disjonction(f1,f2,nbEtape){
 	const nouveauContenu2 = document.createElement("button");
 	const nouvelleDiv = document.createElement("div");
 	const nouvelleDiv2 = document.createElement("div");
-	document.getElementById("main").appendChild(nouvelleDiv);
-	document.getElementById("main").appendChild(nouvelleDiv2);
-	nouvelleDiv.style.textAlign='center';
-	nouvelleDiv2.style.textAlign='center';
+	pere.parentNode.appendChild(nouvelleDiv);
+	pere.parentNode.appendChild(nouvelleDiv2);
+	//nouvelleDiv.style.textAlign='center';
+	//nouvelleDiv2.style.textAlign='center';
 	nouvelleDiv.style.position="relative";
 	nouvelleDiv2.style.position="relative";
-	nouvelleDiv.style.right="5px";
-	nouvelleDiv2.style.left="5px";
+	nouvelleDiv.style.right="90px";
+	nouvelleDiv2.style.left="90px";
 	nouvelleDiv.appendChild(nouveauContenu);
 	nouvelleDiv2.appendChild(nouveauContenu2);
 	nouvelleDiv.id="d"+nbet+"1";
 	nouvelleDiv2.id="d"+nbEtape+"1";
 	nouveauContenu.innerHTML=f1;
 	nouveauContenu2.innerHTML=f2;
-	nouveauContenu.id="f"+nbet+"1";
+	nouveauContenu.id="f"+nbEtape+"1";
 	nouveauContenu2.id="f"+nbEtape+"2";
-	nouveauContenu.setAttribute("onclick","game2("+"f"+nbet+"1"+","+"d"+nbet+"1"+")");
-	nouveauContenu2.setAttribute("onclick","game2("+"f"+nbEtape+"1"+","+"d"+nbEtape+"1"+")");
+	nouveauContenu.setAttribute("onclick","game2(this)");
+	nouveauContenu2.setAttribute("onclick","game2(this)");
+	recopie(pere.id,nbEtape, nouvelleDiv);
+	recopie(pere.id,nbEtape, nouvelleDiv2);
 	
 }
 
@@ -605,6 +605,24 @@ function parenthese(formule){
 	else{ return formule;}
 	
 }
+
+
+function verif(id){
+	if(id.innerHTML.length<3){
+		if (contradiction1==NULL){
+			contradiction1=id.innerHTML;
+		}
+		else { if (contradiction1.charAT(0)=="!") {
+				if (contradiction1.charAt(1)==id.innerHTML.charAt(0)) {
+					score=score+15;
+				}
+			}
+		}
+	
+	
+}
+}
+
 	/*function verif(id){
 	 //id bouton vérif == nombre de bouton(nb sous formules) + num
 	ex: 1. avb / !b  id button vérif = v21
@@ -662,7 +680,7 @@ return verif;
 			
 		}
 		
-		if (symbole== "-"){
+		if (symbole== "→"){
 			nbEtape++;
 			affichage = "!("+affichage+')</button>			<button onclick="game(this,'+"d"+nbEtape+"2"+')" id="f'+nbEtape+"2"+'" type="button">';
 			i++
@@ -719,7 +737,7 @@ return verif;
 								if(formule.charAt(j)==")"){cpt--;}
 								if(formule.charAt(j)=="("){cpt++;}
 							}
-							if(formule.charAt(j)!="-"){
+							if(formule.charAt(j)!="→"){
 								affichage=affichage+'!(';
 							}
 							while(cpt>0){
@@ -735,7 +753,7 @@ return verif;
 						if (formule.charAt(i)=="|"){
 							affichage=affichage+'&';
 						}
-						if (formule.charAt(i)=="-"){
+						if (formule.charAt(i)=="→"){
 							affichage=affichage+'&';
 						}
 						else{affichage=affichage+"!"+charAt(i);}
