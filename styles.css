@@ -7,3 +7,8 @@ main{
   margin-left: 500px;
   
 }
+div{
+	display : table-cell;
+	text-align: center;
+	position : static;
+}
