@@ -106,8 +106,10 @@ function game2(id,){
 
 		
 	var affichage='';
-	const nouvelleDiv = document.createElement("div");
-	
+	//const nouvelleDiv = document.createElement("div");
+	id.parentNode.appendChild(document.createElement("br"));
+	id.parentNode.appendChild(document.createElement("br"));
+	//nouvelleDiv.appendChild(document.createElement("br"));
 	//document.getElementById("main").appendChild(nouvelleDiv);
 	
 	//nouvelleDiv.style.height="22px";
@@ -523,8 +525,7 @@ function conjonction(f1,f2,nbEtape, pere){
 	nouvelleDiv.appendChild(nouveauContenu);
 	nouvelleDiv.appendChild(document.createElement("br"));
 	nouvelleDiv.appendChild(nouveauContenu2);
-	nouvelleDiv.appendChild(document.createElement("br"));
-	nouvelleDiv.appendChild(document.createElement("br"));
+	
 	recopie(pere.id,nbEtape, nouvelleDiv);
 	nouvelleDiv.id="d"+nbEtape+"1";
 	nouveauContenu.innerHTML=f1;
